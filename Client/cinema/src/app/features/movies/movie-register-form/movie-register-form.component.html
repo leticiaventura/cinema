@@ -1,0 +1,98 @@
+<mat-toolbar>
+    <span>Cadastrar Usuário</span>
+</mat-toolbar>
+
+<div class="d-flex justify-content-center">
+    <div class="col-lg-4">
+        <form [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
+
+            <!-- Name -->
+            <mat-form-field class="vertical-space">
+                <input matInput placeholder="Nome" formControlName="name">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('name', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+                <mat-error *ngIf="errorHandling('name', 'nameTaken')">
+                    O nome já está em uso.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Descrição -->
+            <mat-form-field class="vertical-space">
+                <input matInput placeholder="Descrição" formControlName="description">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('description', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Duração -->
+            <mat-form-field class="vertical-space">
+                <input matInput type="number" placeholder="Duração" formControlName="length">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('length', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+                <mat-error *ngIf="errorHandling('length', 'min')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Animação -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Animação</mat-label>
+                <mat-select [(value)]="selectedAnimation" formControlName="animation">
+                    <mat-option [value]="animation.value" *ngFor="let animation of animationOptions">
+                        {{ animation.name }}
+                    </mat-option>
+                </mat-select>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('animation', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Audio -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Audio</mat-label>
+                <mat-select [(value)]="selectedAudio" formControlName="audio">
+                    <mat-option [value]="audio.value" *ngFor="let audio of audioOptions">{{ audio.name }}
+                    </mat-option>
+                </mat-select>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('audio', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Imagem -->
+            <div class="vertical-space">
+                <button mat-raised-button type="button" style="width: 100%;" (click)="imgFileInput.click()">
+                    <mat-icon>attachment</mat-icon>
+                    <mat-label style="padding-left: 5%;">Adicionar Imagem</mat-label>
+                </button>
+                <input hidden type="file" #imgFileInput accept="image/*" (change)="loadImage($event)"/>
+                <div class="vertical-space d-flex justify-content-center" *ngIf="previewUrl">
+                    <img [src]="previewUrl" style="width: 100%;"/>                 
+                </div>
+            </div>
+
+            <!-- Error -->
+            <div *ngIf="error" class="row vertical-space">
+                <div class="col-lg-12">
+                    <span class="warn-message">{{ error }}</span>
+                </div>
+            </div>
+
+
+            <!-- Submit -->
+            <div class="button-wrapper d-flex justify-content-center vertical-space">
+                <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
+                <div style="width: 1%;"></div>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

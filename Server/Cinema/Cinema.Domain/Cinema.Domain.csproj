@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E3631D2-B5D9-4B0A-AAEE-3BBCBCA52884}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cinema.Domain</RootNamespace>
+    <AssemblyName>Cinema.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\ErrorCodes.cs" />
+    <Compile Include="Common\Entity.cs" />
+    <Compile Include="Common\AbstractAddCommand.cs" />
+    <Compile Include="Common\AbstractUpdateCommand.cs" />
+    <Compile Include="Common\IRepository.cs" />
+    <Compile Include="Common\IService.cs" />
+    <Compile Include="Features\Lounges\Interfaces\ILoungeRepository.cs" />
+    <Compile Include="Features\Lounges\Interfaces\ILoungeService.cs" />
+    <Compile Include="Features\Lounges\Lounge.cs" />
+    <Compile Include="Features\Sessions\Interfaces\ISessionRepository.cs" />
+    <Compile Include="Features\Sessions\Interfaces\ISessionService.cs" />
+    <Compile Include="Features\Sessions\Session.cs" />
+    <Compile Include="Features\Snacks\Interfaces\ISnackRepository.cs" />
+    <Compile Include="Features\Snacks\Interfaces\ISnackService.cs" />
+    <Compile Include="Features\Snacks\Snack.cs" />
+    <Compile Include="Features\Movies\EnumAudio.cs" />
+    <Compile Include="Features\Movies\EnumAnimation.cs" />
+    <Compile Include="Features\Movies\Interfaces\IMovieRepository.cs" />
+    <Compile Include="Features\Movies\Interfaces\IMovieService.cs" />
+    <Compile Include="Features\Movies\Movie.cs" />
+    <Compile Include="Features\Users\EnumPermissionLevel.cs" />
+    <Compile Include="Features\Users\Interfaces\IUserRepository.cs" />
+    <Compile Include="Features\Users\Interfaces\IUserService.cs" />
+    <Compile Include="Features\Users\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

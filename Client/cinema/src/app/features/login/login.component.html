@@ -1,0 +1,20 @@
+<div class="login-page">
+    <div class="form">
+        <form class="login-form">
+            <div class="row">
+                <label for="login.email">Email</label>
+                <input [(ngModel)]="user.email" type="email" id="user.email" name="user.email"
+                    placeholder="exemplo@mail.com" />
+            </div>
+            <div class="row">
+                <label for="login.password">Senha</label>
+                <input [(ngModel)]="user.password" type="password" id="user.password" name="user.password"
+                    placeholder="***" />
+            </div>
+            <div class="row">
+                <button (click)="login()">Logar</button>
+            </div>
+            <p class="message">Sem cadastro? <a href="/registrar">Criar conta</a></p>
+        </form>
+    </div>
+</div>

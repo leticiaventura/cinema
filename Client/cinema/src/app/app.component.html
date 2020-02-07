@@ -1,0 +1,56 @@
+<mat-drawer-container fullscreen disableClose="true" opened="true">
+
+    <app-navbar *ngIf="showNavBar"></app-navbar>
+
+    <mat-drawer #drawer mode="side" disableClose="true" opened="true" *ngIf="showSideBar">
+
+        <button mat-mini-fab (click)="isExpanded = !isExpanded" color="primary" style="margin: 10px;">
+            <mat-icon aria-label="Menu">menu</mat-icon>
+        </button>
+
+        <mat-nav-list>
+
+            
+            <!-- User -->
+            <mat-list-item routerLink="/conta">
+                <mat-icon mat-list-icon>account_circle</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Conta</h6>
+            </mat-list-item>
+
+            <!-- usuários -->
+            <mat-list-item routerLink="/usuarios">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Usuários</h6>
+            </mat-list-item>
+
+            <!-- salas -->
+            <mat-list-item routerLink="/salas">
+                <mat-icon mat-list-icon>meeting_room</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Salas</h6>
+            </mat-list-item>
+
+            <!-- filmes -->
+            <mat-list-item routerLink="/filmes">
+                <mat-icon mat-list-icon>local_movies</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Filmes</h6>
+            </mat-list-item>
+
+            <!-- snacks -->
+            <mat-list-item routerLink="/snacks">
+                <mat-icon mat-list-icon>fastfood</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Snacks</h6>
+            </mat-list-item>
+
+            <!-- sessões -->
+            <mat-list-item routerLink="/sessoes">
+                <mat-icon mat-list-icon>play_circle_outline</mat-icon>
+                <h6 mat-button *ngIf="isExpanded">Sessões</h6>
+            </mat-list-item>
+
+        </mat-nav-list>
+
+    </mat-drawer>
+
+    <router-outlet></router-outlet>
+
+</mat-drawer-container>

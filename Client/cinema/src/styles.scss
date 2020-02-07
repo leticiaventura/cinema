@@ -1,0 +1,76 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+
+$fa-font-path: "~font-awesome/fonts/";
+@import "~font-awesome/scss/font-awesome";
+
+/*@import "@angular/material/prebuilt-themes/deeppurple-amber.css";*/
+@import "./theme.scss";
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.mat-form-field {
+  width: 100%;
+}
+.misc-bottom-padding {
+  margin: 8px 0 20px;
+}
+.misc-bottom-padding mat-label {
+  margin-right: 15px;
+}
+.mat-radio-label {
+  margin: 0 15px 0 0;
+}
+.title-center {
+  margin: 0 auto;
+}
+.button-wrapper {
+  margin-top: 10px;
+}
+.vertical-space {
+  padding: 1% 0;
+}
+
+.warn-message {
+    color: orange;
+    font-weight: bold;
+}
+
+
+.timepicker {
+
+    .timepicker__header {
+      background-color: #212121 !important;
+    }
+  
+    .clock-face__clock-hand {
+      background-color: #212121 !important;
+  
+      &::after {
+        background-color: #212121 !important;
+      }
+  
+      &::before {
+        border-color: #212121 !important;
+      }
+    }
+  
+    .clock-face__number {
+      > span.active {
+        background-color: #212121 !important;
+      }
+    }
+  
+    button:not(.timepicker-dial__item) {
+      color: #212121 !important;
+    }
+  }

@@ -1,0 +1,12 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$cinema-app-primary: mat-palette($mat-indigo, 700, 300, 900);
+$cinema-app-accent: mat-palette($mat-light-blue);
+$cinema-app-warn: mat-palette($mat-deep-orange, A200);
+
+
+$cinema-app-theme: mat-dark-theme($cinema-app-primary, $cinema-app-accent, $cinema-app-warn);
+
+@include angular-material-theme($cinema-app-theme);

@@ -1,0 +1,68 @@
+<mat-toolbar>
+    <span>Cadastrar Usuário</span>
+</mat-toolbar>
+
+<div class="d-flex justify-content-center">
+    <div class="col-lg-4">
+        <form [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
+
+            <!-- Name -->
+            <mat-form-field class="vertical-space">
+                <input matInput placeholder="Nome" formControlName="name">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('name', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field class="vertical-space">
+                <input matInput placeholder="Email" formControlName="email">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('email', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field class="vertical-space">
+                <input matInput type="password" placeholder="Senha" formControlName="password">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('password', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+                <mat-error *ngIf="errorHandling('password', 'minlength')">
+                    {{ passwordMinSize }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Permission -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Permissão</mat-label>
+                <mat-select [(value)]="selected" formControlName="permissionLevel">
+                    <mat-option [value]="permission.value" *ngFor="let permission of permissions">{{ permission.name }}
+                    </mat-option>
+                </mat-select>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('permissionLevel', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Error -->
+            <div *ngIf="error" class="row vertical-space">
+                <div class="col-lg-12">
+                    <span class="warn-message">{{ error }}</span>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="button-wrapper d-flex justify-content-center">
+                <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
+                <div style="width: 1%;"></div>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

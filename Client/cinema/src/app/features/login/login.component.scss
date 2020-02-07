@@ -1,0 +1,47 @@
+@import './../../../styles.scss';
+
+.login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto;
+  }
+  .form {
+    position: relative;
+    max-width: 360px;
+    padding: 12%;
+    text-align: center;
+  }
+  .form label {
+      color: #f2f2f2;
+      margin-bottom: 0;
+  }
+
+  .form input {
+    background: #212121;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #f2f2f2;
+  }
+  .form button {
+    text-transform: uppercase;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #f2f2f2;
+    font-size: 14px;
+    background-color: black;
+  }
+
+  .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  .form .message a {
+    color:#f2f2f2;
+    text-decoration: none;
+  }

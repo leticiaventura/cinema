@@ -1,0 +1,97 @@
+<mat-toolbar>
+    <span>Lista de Filmes</span>
+</mat-toolbar>
+<div class="d-flex justify-content-center vertical-space">
+
+    <ng-container>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-12">
+                    <mat-form-field style="width: 100%;">
+                        <input matInput placeholder="Procurar filme" #input>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mat-elevation-z3">
+                        <mat-table [dataSource]="dataSource">
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                                <mat-cell *matCellDef="let movie">{{movie.id}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+                                <mat-cell *matCellDef="let movie">{{movie.name}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="length">
+                                <mat-header-cell *matHeaderCellDef>Duração (min)</mat-header-cell>
+                                <mat-cell *matCellDef="let movie">{{movie.length}} min</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="animation">
+                                <mat-header-cell *matHeaderCellDef>Animação</mat-header-cell>
+                                <mat-cell *matCellDef="let movie"> {{  animationDisplay[movie.animation]}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="audio">
+                                <mat-header-cell *matHeaderCellDef>Audio</mat-header-cell>
+                                <mat-cell *matCellDef="let movie"> {{  audioDisplay[movie.audio]}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="edit">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let movie" (click)="update(movie)">
+                                    <button mat-icon-button>
+                                        <i class="material-icons"> edit</i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="delete">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let movie" (click)="remove(movie)">
+                                    <button mat-icon-button>
+                                        <i class="material-icons"> delete </i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+
+                        <mat-paginator [length]="dataCount" [pageSize]="10" [pageSizeOptions]="[3, 5, 10]">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div class="row vertical-space">
+                <div class="col-lg-12">
+                    <button mat-raised-button style="width: 100%;" (click)="addMovie()">
+                        <i class="material-icons">add</i>
+                        Adicionar novo filme
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="error" class="row vertical-space">
+                <div class="col-lg-12">
+                    <span class="warn-message">{{ error }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <mat-spinner *ngIf="dataSource.loading$ | async">
+                </mat-spinner>
+            </div>
+        </div>
+    </ng-container>
+</div>

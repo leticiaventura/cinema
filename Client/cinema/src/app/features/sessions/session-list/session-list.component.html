@@ -1,0 +1,89 @@
+<mat-toolbar>
+    <span>Lista de Sessões</span>
+</mat-toolbar>
+<div class="d-flex justify-content-center vertical-space">
+
+    <ng-container>
+        <div class="col-lg-11">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mat-elevation-z3">
+                        <mat-table [dataSource]="dataSource">
+
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                                <mat-cell *matCellDef="let session">{{session.id}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="movie">
+                                <mat-header-cell *matHeaderCellDef>Filme</mat-header-cell>
+                                <mat-cell *matCellDef="let session">{{session.movie}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="start">
+                                <mat-header-cell *matHeaderCellDef>Início</mat-header-cell>
+                                <mat-cell *matCellDef="let session">{{session.start | date:'short':'-600'}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="end">
+                                <mat-header-cell *matHeaderCellDef>Fim</mat-header-cell>
+                                <mat-cell *matCellDef="let session">{{session.end | date:'shortTime':'-600'}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="lounge">
+                                <mat-header-cell *matHeaderCellDef>Sala</mat-header-cell>
+                                <mat-cell *matCellDef="let session">{{session.lounge}} ({{session.freeSeats}} assentos livres)</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="animationAudio">
+                                <mat-header-cell *matHeaderCellDef>Animação/Audio</mat-header-cell>
+                                <mat-cell *matCellDef="let session"> {{animationDisplay[session.animation]}} / {{audioDisplay[session.audio]}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="price">
+                                <mat-header-cell *matHeaderCellDef>Preço</mat-header-cell>
+                                <mat-cell *matCellDef="let session">R$ {{session.price | number:'.2-2':'pt'}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="delete">
+                                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                                <mat-cell *matCellDef="let session" (click)="remove(session)">
+                                    <button mat-icon-button>
+                                        <i class="material-icons"> delete </i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+
+                        <mat-paginator [length]="dataCount" [pageSize]="10" [pageSizeOptions]="[3, 5, 10]">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div class="row vertical-space">
+                <div class="col-lg-12">
+                    <button mat-raised-button style="width: 100%;" (click)="addSession()">
+                        <i class="material-icons">add</i>
+                        Adicionar nova sessão
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="error" class="row vertical-space">
+                <div class="col-lg-12">
+                    <span class="warn-message">{{ error }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <mat-spinner *ngIf="dataSource.loading$ | async">
+                </mat-spinner>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EEA6A2FC-8A43-4210-9932-7ADE54E1329F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cinema.Application</RootNamespace>
+    <AssemblyName>Cinema.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Features\Base\AbstractService.cs" />
+    <Compile Include="Features\Sessions\Commands\SessionAddCommand.cs" />
+    <Compile Include="Features\Sessions\MappingProfile.cs" />
+    <Compile Include="Features\Sessions\Queries\SessionGetAvailableLoungesQuery.cs" />
+    <Compile Include="Features\Sessions\SessionService.cs" />
+    <Compile Include="Features\Sessions\ViewModels\SessionGridViewModel.cs" />
+    <Compile Include="Features\Sessions\ViewModels\SessionViewModel.cs" />
+    <Compile Include="Features\Snacks\Commands\SnackAddCommand.cs" />
+    <Compile Include="Features\Snacks\Commands\SnackUpdateCommand.cs" />
+    <Compile Include="Features\Snacks\MappingProfile.cs" />
+    <Compile Include="Features\Snacks\SnackService.cs" />
+    <Compile Include="Features\Snacks\Queries\SnackCheckNameQuery.cs" />
+    <Compile Include="Features\Snacks\ViewModels\SnackGridViewModel.cs" />
+    <Compile Include="Features\Snacks\ViewModels\SnackViewModel.cs" />
+    <Compile Include="Features\Movies\Commands\MovieAddCommand.cs" />
+    <Compile Include="Features\Movies\Commands\MovieUpdateCommand.cs" />
+    <Compile Include="Features\Movies\MovieService.cs" />
+    <Compile Include="Features\Movies\MappingProfile.cs" />
+    <Compile Include="Features\Movies\Queries\MovieCheckNameQuery.cs" />
+    <Compile Include="Features\Movies\ViewModels\MovieGridViewModel.cs" />
+    <Compile Include="Features\Movies\ViewModels\MovieViewModel.cs" />
+    <Compile Include="Features\Lounges\Commands\LoungeAddCommand.cs" />
+    <Compile Include="Features\Lounges\Commands\LoungeUpdateCommand.cs" />
+    <Compile Include="Features\Lounges\MappingProfile.cs" />
+    <Compile Include="Features\Lounges\Queries\LoungeCheckNameQuery.cs" />
+    <Compile Include="Features\Lounges\LoungeService.cs" />
+    <Compile Include="Features\Lounges\ViewModels\LoungeViewModel.cs" />
+    <Compile Include="Features\Users\Commands\UserAddCommand.cs" />
+    <Compile Include="Features\Users\Commands\UserUpdateCommand.cs" />
+    <Compile Include="Features\Users\MappingProfile.cs" />
+    <Compile Include="Features\Users\Queries\UserCheckEmailQuery.cs" />
+    <Compile Include="Features\Users\UserService.cs" />
+    <Compile Include="Features\Users\ViewModels\UserViewModel.cs" />
+    <Compile Include="Mapping\AutoMapperInitializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cinema.Domain\Cinema.Domain.csproj">
+      <Project>{0E3631D2-B5D9-4B0A-AAEE-3BBCBCA52884}</Project>
+      <Name>Cinema.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cinema.Infra.ORM\Cinema.Infra.ORM.csproj">
+      <Project>{0AB061F4-7918-46B0-84C4-9F0F99CAE663}</Project>
+      <Name>Cinema.Infra.ORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cinema.Infra\Cinema.Infra.csproj">
+      <Project>{a58e415c-a455-4f63-9dcb-f77ef879eca2}</Project>
+      <Name>Cinema.Infra</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,87 @@
+<mat-toolbar>
+    <span>Cadastrar Sessão</span>
+</mat-toolbar>
+
+<div class="d-flex justify-content-center">
+    <div class="col-lg-4">
+        <form [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
+
+            <!-- Data -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Data</mat-label>
+                <input matInput placeholder="Data" [matDatepicker]="myDatepicker" readonly formControlName="date">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('date', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Hora -->            
+            <mat-form-field class="vertical-space">
+                <mat-label>Hora</mat-label>
+                <input matInput placeholder="Horário" [ngxTimepicker]="default" [format]="24" readonly formControlName="time">
+                <ngx-material-timepicker #default></ngx-material-timepicker>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('time', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Preço -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Preço</mat-label>
+                <input matInput type="number" placeholder="Preço" formControlName="price" autocomplete="off">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('price', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Filme -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Filme</mat-label>
+                <mat-select [(value)]="selectedMovie" formControlName="movie">
+                    <mat-option [value]="movie" *ngFor="let movie of movieOptions">
+                        {{ movie.name }}
+                    </mat-option>
+                </mat-select>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('movieId', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Sala -->
+            <mat-form-field class="vertical-space">
+                <mat-label>Sala</mat-label>
+                <mat-select [(value)]="selectedLounge" formControlName="loungeId">
+                    <mat-option [value]="lounge.id" *ngFor="let lounge of loungeOptions">
+                        {{ lounge.name }}
+                    </mat-option>
+                </mat-select>
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('loungeId', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Error -->
+            <div *ngIf="error" class="row vertical-space">
+                <div class="col-lg-12">
+                    <span class="warn-message">{{ error }}</span>
+                </div>
+            </div>
+
+
+            <!-- Submit -->
+            <div class="button-wrapper d-flex justify-content-center vertical-space">
+                <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
+                <div style="width: 1%;"></div>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+</div>
