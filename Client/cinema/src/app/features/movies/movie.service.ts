@@ -29,14 +29,6 @@ export class MovieService {
         });
     }
 
-    
-    getAll(): Observable<DataGridMovies> {
-        return this.http.get<DataGridMovies>(this.api, {
-            params: new HttpParams()
-                .set('$orderBy', 'name asc')
-        });
-    }
-
     add(data, image): Observable<any> {
         return this.http.post(this.api, new MovieAddCommand(data, image)).pipe(
             catchError(this.error)

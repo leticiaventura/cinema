@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { DataGridMovies } from '../movies/shared/movie.model';
 
 @Injectable({
     providedIn: 'root'
@@ -67,5 +68,12 @@ export class SessionService {
         return this.http.post(this.api + "/availablelounges", new SessionGetAvailableLoungesQuery(start, movieLength)).pipe(
             catchError(this.error)
         );
+    }
+
+    getAllMovies(): Observable<DataGridMovies> {
+        return this.http.get<DataGridMovies>("https://localhost:44374/api/movies", {
+            params: new HttpParams()
+                .set('$orderBy', 'name asc')
+        });
     }
 }

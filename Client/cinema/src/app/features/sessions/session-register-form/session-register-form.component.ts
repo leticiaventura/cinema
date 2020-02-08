@@ -30,7 +30,6 @@ export class SessionRegisterFormComponent implements OnInit {
     constructor(public fb: FormBuilder, private router: Router,
         private activeRoute: ActivatedRoute,
         private sessionService: SessionService,
-        private movieService: MovieService,
         private dialog: MatDialog) { }
 
     ngOnInit(): void {
@@ -69,7 +68,7 @@ export class SessionRegisterFormComponent implements OnInit {
     }
 
     loadMovies(): void {
-        this.movieService.getAll().subscribe(x => {
+        this.sessionService.getAllMovies().subscribe(x => {
             this.movieOptions = x.items;
         });
     }

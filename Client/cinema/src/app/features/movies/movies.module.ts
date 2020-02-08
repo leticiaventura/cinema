@@ -20,8 +20,7 @@ import { MovieResolveService } from './movie.service';
         MaterialModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FormsModule,
-        MaterialModule
+        FormsModule
     ],
     providers: [AdminAuthGuard, MovieResolveService]
 })

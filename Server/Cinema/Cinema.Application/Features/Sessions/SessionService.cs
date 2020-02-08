@@ -47,6 +47,16 @@ namespace Cinema.Application.Features.Sessions
             return availableLounges;
         }
 
+        public override bool Remove(long id)
+        {
+            var session = GetById(id);
+            if (session != null && session.Start.AddDays(-10) <= DateTime.Now)
+            {
+                throw new BusinessException(ErrorCodes.BadRequest, "A sessão só pode ser excluída com mais de 10 dias de antecedência");
+            }
+            return base.Remove(id);
+        }
+
         private static Expression<Func<Session, bool>> CrossSchedule(Session session)
         {
             return futureSession => (session.Start >= futureSession.Start && session.Start <= futureSession.End) || (session.End >= futureSession.Start && session.End <= futureSession.End);

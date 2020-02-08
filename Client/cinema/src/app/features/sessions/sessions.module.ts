@@ -25,6 +25,6 @@ import { SessionsRoutingModule } from './sessions-routing.module';
         MaterialModule,
         NgxMaterialTimepickerModule
     ],
-    providers: [AdminAuthGuard, MovieService]
+    providers: [AdminAuthGuard]
 })
 export class SessionsModule { }
