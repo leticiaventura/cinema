@@ -1,6 +1,6 @@
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Permission } from './../users/shared/user.model';
 import { CookieHelperService } from './../../shared/cookie-helper/cookie-helper.service';
 import { Injectable, EventEmitter } from '@angular/core';
@@ -17,7 +17,7 @@ export class AuthService {
 
     constructor(private router: Router, private cookie: CookieHelperService, private httpClient: HttpClient) { }
 
-    login(user: User) {
+    login(user: User): Observable<any> {
         let grant_type = 'password';
         let body = `grant_type=${grant_type}&username=${user.email}&password=${user.password}`;
 
@@ -26,15 +26,17 @@ export class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             })
         };
-        this.httpClient.post(`https://localhost:44374/token`, body, httpOptions).subscribe((x : any)=> {
-            const accessToken = x.access_token;
-            this.cookie.createCookie("token", accessToken, 1);
-            this.getPermission(user);
-        });       
+        return this.httpClient.post(`https://localhost:44374/token`, body, httpOptions).pipe(
+            catchError(this.error)
+        );
     }
 
-    private getPermission(user){
-        this.httpClient.get(`https://localhost:44374/api/users/role`).subscribe((x : any) => {
+    error(error: HttpErrorResponse) {
+        return throwError(error.error.error_description);
+    }
+
+    getPermission(user) {
+        this.httpClient.get(`https://localhost:44374/api/users/role`).subscribe((x: any) => {
             this.permission = x;
             this.applyPermission.emit(this.permission);
             this.router.navigate(['/']);
