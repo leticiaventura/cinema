@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Http;
 using AutoMapper;
 using Cinema.Application.Features.Lounges;
 using Cinema.Application.Features.Movies;
@@ -26,6 +27,7 @@ namespace Cinema.WebAPI.IoC
     /// <summary>
     /// Container para injeção de dependêcias nos construtores.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class SimpleInjectorContainer
     {
         public static Container ContainerInstance { get; private set; }

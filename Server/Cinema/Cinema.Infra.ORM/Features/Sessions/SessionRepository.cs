@@ -13,11 +13,6 @@ namespace Cinema.Infra.ORM.Features.Sessions
         {
         }
 
-        public override IQueryable<Session> GetAll(int size)
-        {
-            return _context.Sessions.Include(s => s.Movie).Include(s => s.Lounge).Take(size);
-        }
-
         public override IQueryable<Session> GetAll()
         {
             return _context.Sessions.Include(s => s.Movie).Include(s => s.Lounge);

@@ -37,11 +37,6 @@ namespace Cinema.Application.Features.Base
             return _repository.GetAll();
         }
 
-        public virtual IQueryable<T> GetAll(int quantity)
-        {
-            return _repository.GetAll(quantity);
-        }
-
         public virtual T GetById(long id)
         {
             return _repository.GetById(id);

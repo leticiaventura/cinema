@@ -30,7 +30,7 @@ namespace Cinema.Application.Tests.Features.Snacks
         #region Add
 
         [Test]
-        public void Should_Add_Snack_Successfully()
+        public void Snack_Service_Should_Add_Snack_Successfully()
         {
             //Arrange 
             var snack = ObjectMother.GetDefaultSnack();
@@ -63,7 +63,7 @@ namespace Cinema.Application.Tests.Features.Snacks
 
         #region Update
         [Test]
-        public void Should_Update_Snack_Sucessfully()
+        public void Snack_Service_Should_Update_Snack_Sucessfully()
         {
             //Arrange
             var snack = ObjectMother.GetDefaultSnack();
@@ -102,7 +102,7 @@ namespace Cinema.Application.Tests.Features.Snacks
         #region Remove
 
         [Test]
-        public void Should_Remove_Snack_Sucessfully()
+        public void Snack_Service_Should_Remove_Snack_Sucessfully()
         {
             //Arrange
             var idToRemove = 1;
@@ -137,7 +137,7 @@ namespace Cinema.Application.Tests.Features.Snacks
         #region Get
 
         [Test]
-        public void Should_Get_Snack_By_Id_Sucessfully()
+        public void Snack_Service_Should_Get_Snack_By_Id_Sucessfully()
         {
             //Arrange
             var snack = ObjectMother.GetDefaultSnack();
@@ -153,7 +153,7 @@ namespace Cinema.Application.Tests.Features.Snacks
         }
 
         [Test]
-        public void Should_Get_All_Snacks_Sucessfully()
+        public void Snack_Service_Should_Get_All_Snacks_Sucessfully()
         {
             //Arrange
             var snack = ObjectMother.GetDefaultSnack();
@@ -171,7 +171,7 @@ namespace Cinema.Application.Tests.Features.Snacks
         }
 
         [Test]
-        public void Should_Verify_Snack_Name_Sucessfully()
+        public void Snack_Service_Should_Verify_Snack_Name_Sucessfully()
         {
             //Arrange
             var snack = ObjectMother.GetDefaultSnack();
@@ -183,25 +183,6 @@ namespace Cinema.Application.Tests.Features.Snacks
             //Assert
             _mockSnackRepository.Verify(r => r.IsNameAlreadyInUse(snack.Name, snack.Id), Times.Once);
             result.Should().BeFalse();
-        }
-
-        [Test]
-        public void Should_Get_All_Snacks_With_Quantity_Sucessfully()
-        {
-            //Arrange
-            int quantity = 2;
-            var snack = ObjectMother.GetDefaultSnack();
-            var mockValueRepository = new List<Snack>() { snack, snack }.AsQueryable();
-            _mockSnackRepository.Setup(r => r.GetAll(It.IsAny<int>())).Returns(mockValueRepository);
-
-            //Action
-            var snacks = _snackService.GetAll(quantity);
-
-            //Assert
-            _mockSnackRepository.Verify(r => r.GetAll(It.IsAny<int>()), Times.Once);
-            snacks.Should().NotBeNull();
-            snacks.First().Should().Be(snack);
-            snacks.Count().Should().Be(mockValueRepository.Count());
         }
         #endregion
     }

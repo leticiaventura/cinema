@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
 using Cinema.WebAPI.AuthProvider;
@@ -9,6 +10,7 @@ using Owin;
 
 namespace Cinema.WebAPI.App_Start
 {
+    [ExcludeFromCodeCoverage]
     public class OAuthConfig
     {
         /// <summary>

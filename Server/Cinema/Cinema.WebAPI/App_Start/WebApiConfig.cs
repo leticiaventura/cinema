@@ -8,9 +8,11 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.OData.UriParser;
 using Microsoft.OData;
 using System.Web.Http.Cors;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cinema.WebAPI
 {
+    [ExcludeFromCodeCoverage]
     public static class WebApiConfig
     {
         /// <summary>

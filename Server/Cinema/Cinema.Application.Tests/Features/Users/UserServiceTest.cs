@@ -32,7 +32,7 @@ namespace Cinema.Application.Tests.Features.Users
         #region Add
 
         [Test]
-        public void Should_Add_User_Successfully()
+        public void User_Service_Should_Add_User_Successfully()
         {
             //Arrange 
             var user = ObjectMother.GetDefaultUser();
@@ -65,7 +65,7 @@ namespace Cinema.Application.Tests.Features.Users
 
         #region Update
         [Test]
-        public void Should_Update_User_Sucessfully()
+        public void User_Service_Should_Update_User_Sucessfully()
         {
             //Arrange
             var user = ObjectMother.GetDefaultUser();
@@ -104,7 +104,7 @@ namespace Cinema.Application.Tests.Features.Users
         #region Remove
 
         [Test]
-        public void Should_Remove_User_Sucessfully()
+        public void User_Service_Should_Remove_User_Sucessfully()
         {
             //Arrange
             var idToRemove = 1;
@@ -139,7 +139,7 @@ namespace Cinema.Application.Tests.Features.Users
         #region Get
 
         [Test]
-        public void Should_Get_User_By_Id_Sucessfully()
+        public void User_Service_Should_Get_User_By_Id_Sucessfully()
         {
             //Arrange
             var user = ObjectMother.GetDefaultUser();
@@ -155,7 +155,7 @@ namespace Cinema.Application.Tests.Features.Users
         }     
         
         [Test]
-        public void Should_Login_Successfully()
+        public void User_Service_Should_Login_Successfully()
         {
             //Arrange
             var user = ObjectMother.GetDefaultUser();
@@ -171,7 +171,7 @@ namespace Cinema.Application.Tests.Features.Users
         }
 
         [Test]
-        public void Should_Get_All_Users_Sucessfully()
+        public void User_Service_Should_Get_All_Users_Sucessfully()
         {
             //Arrange
             var user = ObjectMother.GetDefaultUser();
@@ -189,7 +189,7 @@ namespace Cinema.Application.Tests.Features.Users
         }    
 
         [Test]
-        public void Should_Verify_User_Email_Sucessfully()
+        public void User_Service_Should_Verify_User_Email_Sucessfully()
         {
             //Arrange
             var user = ObjectMother.GetDefaultUser();
@@ -201,25 +201,6 @@ namespace Cinema.Application.Tests.Features.Users
             //Assert
             _mockUserRepository.Verify(r => r.IsEmailAlreadyInUse(user.Email, user.Id), Times.Once);
             result.Should().BeFalse();
-        }
-
-        [Test]
-        public void Should_Get_All_Users_With_Quantity_Sucessfully()
-        {
-            //Arrange
-            int quantity = 2;
-            var user = ObjectMother.GetDefaultUser();
-            var mockValueRepository = new List<User>() { user, user }.AsQueryable();
-            _mockUserRepository.Setup(r => r.GetAll(It.IsAny<int>())).Returns(mockValueRepository);
-
-            //Action
-            var users = _userService.GetAll(quantity);
-
-            //Assert
-            _mockUserRepository.Verify(r => r.GetAll(It.IsAny<int>()), Times.Once);
-            users.Should().NotBeNull();
-            users.First().Should().Be(user);
-            users.Count().Should().Be(mockValueRepository.Count());
         }
         #endregion
     }

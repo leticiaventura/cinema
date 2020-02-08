@@ -13,7 +13,7 @@ namespace Cinema.Infra.ORM.Features.Snacks
 
         public bool IsNameAlreadyInUse(string name, long id)
         {
-            return _context.Movies.Where(x => x.Name.Equals(name) && x.Id != id).Count() > 0;
+            return _context.Snacks.Where(x => x.Name.Equals(name) && x.Id != id).Count() > 0;
         }
     }
 }

@@ -9,6 +9,5 @@ namespace Cinema.Domain.Common
         bool Remove(long id);
         T GetById(long id);
         IQueryable<T> GetAll();
-        IQueryable<T> GetAll(int quantity);
     }
 }

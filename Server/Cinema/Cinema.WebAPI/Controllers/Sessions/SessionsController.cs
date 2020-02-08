@@ -32,20 +32,7 @@ namespace Cinema.WebAPI.Controllers.Sessions
         [ODataQueryOptionsValidate]
         public IHttpActionResult Get(ODataQueryOptions<Session> queryOptions)
         {
-            var queryString = Request.GetQueryNameValuePairs()
-                                    .Where(x => x.Key.Equals("size"))
-                                    .FirstOrDefault();
-
-            var query = default(IQueryable<Session>);
-            int size = 0;
-            if (queryString.Key != null && int.TryParse(queryString.Value, out size))
-            {
-                query = _service.GetAll(size);
-            }
-            else
-                query = _service.GetAll();
-
-            return HandleQueryable<Session, SessionGridViewModel>(query, queryOptions);
+            return HandleQueryable<Session, SessionGridViewModel>(_service.GetAll(), queryOptions);
         }
 
         [HttpGet]

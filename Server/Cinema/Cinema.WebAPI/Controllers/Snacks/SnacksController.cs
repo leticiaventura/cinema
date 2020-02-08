@@ -30,20 +30,7 @@ namespace Cinema.WebAPI.Controllers.Snacks
         [ODataQueryOptionsValidate]
         public IHttpActionResult Get(ODataQueryOptions<Snack> queryOptions)
         {
-            var queryString = Request.GetQueryNameValuePairs()
-                                    .Where(x => x.Key.Equals("size"))
-                                    .FirstOrDefault();
-
-            var query = default(IQueryable<Snack>);
-            int size = 0;
-            if (queryString.Key != null && int.TryParse(queryString.Value, out size))
-            {
-                query = _service.GetAll(size);
-            }
-            else
-                query = _service.GetAll();
-
-            return HandleQueryable<Snack, SnackGridViewModel>(query, queryOptions);
+            return HandleQueryable<Snack, SnackGridViewModel>(_service.GetAll(), queryOptions);
         }
 
         [HttpGet]
@@ -58,17 +45,16 @@ namespace Cinema.WebAPI.Controllers.Snacks
         [HttpPost]
         public IHttpActionResult Post(SnackAddCommand SnackCmd)
         {
-            //var validator = 
-                SnackCmd.Validate(_service);
-            //if (!validator.IsValid)
-            //    return HandleValidationFailure(validator.Errors);
+            var validator = SnackCmd.Validate(_service);
+            if (!validator.IsValid)
+                return HandleValidationFailure(validator.Errors);
 
             return HandleCallback(_service.Add(SnackCmd));
         }
 
         [HttpPost]
         [Route("name")]
-        public IHttpActionResult CheckEmail(SnackCheckNameQuery query)
+        public IHttpActionResult CheckName(SnackCheckNameQuery query)
         {
             return HandleCallback(_service.IsNameAlreadyInUse(query.Name, query.Id));
         }

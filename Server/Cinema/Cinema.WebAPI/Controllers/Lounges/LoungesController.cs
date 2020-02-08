@@ -30,20 +30,7 @@ namespace Cinema.WebAPI.Controllers.Lounges
         [ODataQueryOptionsValidate]
         public IHttpActionResult Get(ODataQueryOptions<Lounge> queryOptions)
         {
-            var queryString = Request.GetQueryNameValuePairs()
-                                    .Where(x => x.Key.Equals("size"))
-                                    .FirstOrDefault();
-
-            var query = default(IQueryable<Lounge>);
-            int size = 0;
-            if (queryString.Key != null && int.TryParse(queryString.Value, out size))
-            {
-                query = _service.GetAll(size);
-            }
-            else
-                query = _service.GetAll();
-
-            return HandleQueryable<Lounge, LoungeViewModel>(query, queryOptions);
+            return HandleQueryable<Lounge, LoungeViewModel>(_service.GetAll(), queryOptions);
         }
 
         [HttpGet]
@@ -67,7 +54,7 @@ namespace Cinema.WebAPI.Controllers.Lounges
 
         [HttpPost]
         [Route("name")]
-        public IHttpActionResult CheckEmail(MovieCheckNameQuery query)
+        public IHttpActionResult CheckName(LoungeCheckNameQuery query)
         {
             return HandleCallback(_service.IsNameAlreadyInUse(query.Name, query.Id));
         }

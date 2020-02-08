@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
 using System.Web.Http.Controllers;
@@ -11,6 +12,7 @@ namespace Cinema.WebAPI.Filters
     /// <summary>
     /// Filtro para validar opções OData.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ODataQueryOptionsValidateAttribute : ActionFilterAttribute
     {
 

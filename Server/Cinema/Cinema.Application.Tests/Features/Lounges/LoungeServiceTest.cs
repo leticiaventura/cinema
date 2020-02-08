@@ -33,7 +33,7 @@ namespace Cinema.Application.Tests.Features.Lounges
         #region Add
 
         [Test]
-        public void Should_Add_Lounge_Successfully()
+        public void Lounge_Service_Should_Add_Lounge_Successfully()
         {
             //Arrange 
             var lounge = ObjectMother.GetDefaultLounge();
@@ -66,7 +66,7 @@ namespace Cinema.Application.Tests.Features.Lounges
 
         #region Update
         [Test]
-        public void Should_Update_Lounge_Sucessfully()
+        public void Lounge_Service_Should_Update_Lounge_Sucessfully()
         {
             //Arrange
             var lounge = ObjectMother.GetDefaultLounge();
@@ -105,7 +105,7 @@ namespace Cinema.Application.Tests.Features.Lounges
         #region Remove
 
         [Test]
-        public void Should_Remove_Lounge_Sucessfully()
+        public void Lounge_Service_Should_Remove_Lounge_Sucessfully()
         {
             //Arrange
             var idToRemove = 1;
@@ -140,7 +140,7 @@ namespace Cinema.Application.Tests.Features.Lounges
         #region Get
 
         [Test]
-        public void Should_Get_Lounge_By_Id_Sucessfully()
+        public void Lounge_Service_Should_Get_Lounge_By_Id_Sucessfully()
         {
             //Arrange
             var lounge = ObjectMother.GetDefaultLounge();
@@ -156,7 +156,7 @@ namespace Cinema.Application.Tests.Features.Lounges
         }
 
         [Test]
-        public void Should_Get_All_Lounges_Sucessfully()
+        public void Lounge_Service_Should_Get_All_Lounges_Sucessfully()
         {
             //Arrange
             var lounge = ObjectMother.GetDefaultLounge();
@@ -174,7 +174,7 @@ namespace Cinema.Application.Tests.Features.Lounges
         }
 
         [Test]
-        public void Should_Verify_Lounge_Name_Sucessfully()
+        public void Lounge_Service_Should_Verify_Lounge_Name_Sucessfully()
         {
             //Arrange
             var lounge = ObjectMother.GetDefaultLounge();
@@ -186,25 +186,6 @@ namespace Cinema.Application.Tests.Features.Lounges
             //Assert
             _mockLoungeRepository.Verify(r => r.IsNameAlreadyInUse(lounge.Name, lounge.Id), Times.Once);
             result.Should().BeFalse();
-        }
-
-        [Test]
-        public void Should_Get_All_Lounges_With_Quantity_Sucessfully()
-        {
-            //Arrange
-            int quantity = 2;
-            var lounge = ObjectMother.GetDefaultLounge();
-            var mockValueRepository = new List<Lounge>() { lounge, lounge }.AsQueryable();
-            _mockLoungeRepository.Setup(r => r.GetAll(It.IsAny<int>())).Returns(mockValueRepository);
-
-            //Action
-            var lounges = _loungeService.GetAll(quantity);
-
-            //Assert
-            _mockLoungeRepository.Verify(r => r.GetAll(It.IsAny<int>()), Times.Once);
-            lounges.Should().NotBeNull();
-            lounges.First().Should().Be(lounge);
-            lounges.Count().Should().Be(mockValueRepository.Count());
         }
         #endregion
     }

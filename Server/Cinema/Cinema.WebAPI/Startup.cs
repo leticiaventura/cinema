@@ -4,10 +4,12 @@ using Owin;
 using System.Web.Http;
 using Cinema.WebAPI.App_Start;
 using Cinema.WebAPI.IoC;
+using System.Diagnostics.CodeAnalysis;
 
 [assembly: OwinStartup(typeof(Cinema.WebAPI.Startup))]
 namespace Cinema.WebAPI
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public void Configuration(IAppBuilder app)

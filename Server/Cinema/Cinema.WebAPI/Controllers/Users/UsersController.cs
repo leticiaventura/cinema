@@ -31,20 +31,7 @@ namespace Cinema.WebAPI.Controllers.Users
         [ODataQueryOptionsValidate]
         public IHttpActionResult Get(ODataQueryOptions<User> queryOptions)
         {
-                var queryString = Request.GetQueryNameValuePairs()
-                                    .Where(x => x.Key.Equals("size"))
-                                    .FirstOrDefault();
-
-            var query = default(IQueryable<User>);
-            int size = 0;
-            if (queryString.Key != null && int.TryParse(queryString.Value, out size))
-            {
-                query = _service.GetAll(size);
-            }
-            else
-                query = _service.GetAll();
-
-            return HandleQueryable<User, UserViewModel>(query, queryOptions);
+            return HandleQueryable<User, UserViewModel>(_service.GetAll(), queryOptions);
         }
 
         [HttpGet]
@@ -61,7 +48,7 @@ namespace Cinema.WebAPI.Controllers.Users
         public IHttpActionResult IdentifyRole()
         {
             var identity = (ClaimsIdentity)User.Identity;
-            string claim = identity.Claims.First().Value;
+            string claim = identity.Claims.ToArray()[1].Value;
 
             switch (claim.ToLower())
             {
@@ -93,7 +80,7 @@ namespace Cinema.WebAPI.Controllers.Users
 
         [HttpPost]
         [Route("email")]
-        public IHttpActionResult CheckEmail(LoungeCheckNameQuery query)
+        public IHttpActionResult CheckEmail(UserCheckNameQuery query)
         {
             return HandleCallback(_service.IsEmailAlreadyInUse(query.Email, query.Id));
         }

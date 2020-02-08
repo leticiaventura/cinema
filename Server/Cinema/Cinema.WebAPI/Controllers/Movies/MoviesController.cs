@@ -30,20 +30,7 @@ namespace Cinema.WebAPI.Controllers.Movies
         [ODataQueryOptionsValidate]
         public IHttpActionResult Get(ODataQueryOptions<Movie> queryOptions)
         {
-            var queryString = Request.GetQueryNameValuePairs()
-                                    .Where(x => x.Key.Equals("size"))
-                                    .FirstOrDefault();
-
-            var query = default(IQueryable<Movie>);
-            int size = 0;
-            if (queryString.Key != null && int.TryParse(queryString.Value, out size))
-            {
-                query = _service.GetAll(size);
-            }
-            else
-                query = _service.GetAll();
-
-            return HandleQueryable<Movie, MovieGridViewModel>(query, queryOptions);
+            return HandleQueryable<Movie, MovieGridViewModel>(_service.GetAll(), queryOptions);
         }
 
         [HttpGet]
@@ -67,7 +54,7 @@ namespace Cinema.WebAPI.Controllers.Movies
 
         [HttpPost]
         [Route("name")]
-        public IHttpActionResult CheckEmail(MovieCheckNameQuery query)
+        public IHttpActionResult CheckName(MovieCheckNameQuery query)
         {
             return HandleCallback(_service.IsNameAlreadyInUse(query.Name, query.Id));
         }

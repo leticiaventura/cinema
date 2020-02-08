@@ -31,7 +31,7 @@ namespace Cinema.Application.Tests.Features.Movies
         #region Add
 
         [Test]
-        public void Should_Add_Movie_Successfully()
+        public void Movie_Service_Should_Add_Movie_Successfully()
         {
             //Arrange 
             var movie = ObjectMother.GetDefaultMovie();
@@ -64,7 +64,7 @@ namespace Cinema.Application.Tests.Features.Movies
 
         #region Update
         [Test]
-        public void Should_Update_Movie_Sucessfully()
+        public void Movie_Service_Should_Update_Movie_Sucessfully()
         {
             //Arrange
             var movie = ObjectMother.GetDefaultMovie();
@@ -103,7 +103,7 @@ namespace Cinema.Application.Tests.Features.Movies
         #region Remove
 
         [Test]
-        public void Should_Remove_Movie_Sucessfully()
+        public void Movie_Service_Should_Remove_Movie_Sucessfully()
         {
             //Arrange
             var idToRemove = 1;
@@ -138,7 +138,7 @@ namespace Cinema.Application.Tests.Features.Movies
         #region Get
 
         [Test]
-        public void Should_Get_Movie_By_Id_Sucessfully()
+        public void Movie_Service_Should_Get_Movie_By_Id_Sucessfully()
         {
             //Arrange
             var movie = ObjectMother.GetDefaultMovie();
@@ -154,7 +154,7 @@ namespace Cinema.Application.Tests.Features.Movies
         }
 
         [Test]
-        public void Should_Get_All_Movies_Sucessfully()
+        public void Movie_Service_Should_Get_All_Movies_Sucessfully()
         {
             //Arrange
             var movie = ObjectMother.GetDefaultMovie();
@@ -172,7 +172,7 @@ namespace Cinema.Application.Tests.Features.Movies
         }
 
         [Test]
-        public void Should_Verify_Movie_Name_Sucessfully()
+        public void Movie_Service_Should_Verify_Movie_Name_Sucessfully()
         {
             //Arrange
             var movie = ObjectMother.GetDefaultMovie();
@@ -184,25 +184,6 @@ namespace Cinema.Application.Tests.Features.Movies
             //Assert
             _mockMovieRepository.Verify(r => r.IsNameAlreadyInUse(movie.Name, movie.Id), Times.Once);
             result.Should().BeFalse();
-        }
-
-        [Test]
-        public void Should_Get_All_Movies_With_Quantity_Sucessfully()
-        {
-            //Arrange
-            int quantity = 2;
-            var movie = ObjectMother.GetDefaultMovie();
-            var mockValueRepository = new List<Movie>() { movie, movie }.AsQueryable();
-            _mockMovieRepository.Setup(r => r.GetAll(It.IsAny<int>())).Returns(mockValueRepository);
-
-            //Action
-            var movies = _movieService.GetAll(quantity);
-
-            //Assert
-            _mockMovieRepository.Verify(r => r.GetAll(It.IsAny<int>()), Times.Once);
-            movies.Should().NotBeNull();
-            movies.First().Should().Be(movie);
-            movies.Count().Should().Be(mockValueRepository.Count());
         }
         #endregion
     }

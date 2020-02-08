@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Cinema.Infra.ORM.Base
     /// <summary>
     /// Inicializador para criar o banco de dados quando não existir. Possui um método Seed para popular o banco.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class DbInitializer : CreateDatabaseIfNotExists<BaseContext>
     {
         protected override void Seed(BaseContext context)

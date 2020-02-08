@@ -49,11 +49,6 @@ namespace Cinema.Infra.ORM.Base
         #endregion
 
         #region GET
-        public virtual IQueryable<T> GetAll(int size)
-        {
-            return Table().Take(size);
-        }
-
         public virtual IQueryable<T> GetAll()
         {
             return Table();

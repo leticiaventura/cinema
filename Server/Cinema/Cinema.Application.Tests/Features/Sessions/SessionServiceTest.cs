@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Cinema.Application.Features.Sessions;
 using Cinema.Application.Tests.Initializer;
 using Cinema.Common.Tests;
+using Cinema.Domain.Exceptions;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Lounges.Interfaces;
 using Cinema.Domain.Features.Movies.Interfaces;
@@ -37,7 +38,7 @@ namespace Cinema.Application.Tests.Features.Sessions
         #region Add
 
         [Test]
-        public void Should_Add_Session_Successfully()
+        public void Session_Service_Should_Add_Session_Successfully()
         {
             //Arrange 
             var session = ObjectMother.GetDefaultSession();
@@ -74,12 +75,31 @@ namespace Cinema.Application.Tests.Features.Sessions
             act.Should().Throw<Exception>();
             _mockSessionRepository.Verify(r => r.Add(It.IsAny<Session>()), Times.Once);
         }
+
+        [Test]
+        public void Session_Service_Add_Should_Throw_Lounge_Not_Available_Exception()
+        {
+            //Arrange
+            var session = ObjectMother.GetDefaultSession();
+            var sessionCmd = ObjectMother.GetSessionAddCommand();
+            _mockMovieService.Setup(r => r.GetById(It.IsAny<long>())).Returns(ObjectMother.GetDefaultMovie());
+            _mockLoungeService.Setup(r => r.GetById(It.IsAny<long>())).Returns(ObjectMother.GetDefaultLounge());
+            _mockLoungeService.Setup(r => r.GetAll()).Returns(new List<Lounge>() { }.AsQueryable());
+
+
+            //Action
+            Action act = () => _sessionService.Add(sessionCmd);
+
+            //Assert
+            act.Should().Throw<BusinessException>();
+            _mockSessionRepository.Verify(r => r.Add(It.IsAny<Session>()), Times.Never);
+        }
         #endregion
 
         #region Remove
 
         [Test]
-        public void Should_Remove_Session_Sucessfully()
+        public void Session_Service_Should_Remove_Session_Sucessfully()
         {
             //Arrange
             var idToRemove = 1;
@@ -114,7 +134,7 @@ namespace Cinema.Application.Tests.Features.Sessions
         #region Get
 
         [Test]
-        public void Should_Get_Session_By_Id_Sucessfully()
+        public void Session_Service_Should_Get_Session_By_Id_Sucessfully()
         {
             //Arrange
             var session = ObjectMother.GetDefaultSession();
@@ -130,7 +150,7 @@ namespace Cinema.Application.Tests.Features.Sessions
         }
 
         [Test]
-        public void Should_Get_All_Sessions_Sucessfully()
+        public void Session_Service_Should_Get_All_Sessions_Sucessfully()
         {
             //Arrange
             var session = ObjectMother.GetDefaultSession();
@@ -148,7 +168,7 @@ namespace Cinema.Application.Tests.Features.Sessions
         }
 
         [Test]
-        public void Should_Get_Available_Lounges_Should_Return_0()
+        public void Session_Service_Should_Get_Available_Lounges_Should_Return_0()
         {
             //Arrange
             var futureSession = ObjectMother.GetDefaultSession();
@@ -166,25 +186,6 @@ namespace Cinema.Application.Tests.Features.Sessions
             _mockSessionRepository.Verify(r => r.GetAll(), Times.Once);
             _mockLoungeService.Verify(r => r.GetAll(), Times.Once);
             result.Should().BeEmpty();
-        }
-
-        [Test]
-        public void Should_Get_All_Sessions_With_Quantity_Sucessfully()
-        {
-            //Arrange
-            int quantity = 2;
-            var session = ObjectMother.GetDefaultSession();
-            var mockValueRepository = new List<Session>() { session, session }.AsQueryable();
-            _mockSessionRepository.Setup(r => r.GetAll(It.IsAny<int>())).Returns(mockValueRepository);
-
-            //Action
-            var sessions = _sessionService.GetAll(quantity);
-
-            //Assert
-            _mockSessionRepository.Verify(r => r.GetAll(It.IsAny<int>()), Times.Once);
-            sessions.Should().NotBeNull();
-            sessions.First().Should().Be(session);
-            sessions.Count().Should().Be(mockValueRepository.Count());
         }
         #endregion
     }
