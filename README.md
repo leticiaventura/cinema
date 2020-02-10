@@ -17,7 +17,12 @@
 	
 	3. Na tela de login utilizar as credenciais pré cadastradas:
       username: admin
-      senha: admin	
+      senha: admin
+      
+      ou
+      
+      username: customer
+      senha: customer
 	
 
 ### Arquitetura e Organização
