@@ -104,7 +104,7 @@ namespace Cinema.Application.Tests.Features.Sessions
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockSessionRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockSessionRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _sessionService.Remove(idToRemove);
@@ -120,7 +120,7 @@ namespace Cinema.Application.Tests.Features.Sessions
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = false;
-            _mockSessionRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockSessionRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _sessionService.Remove(idToRemove);

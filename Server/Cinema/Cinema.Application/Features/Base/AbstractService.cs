@@ -29,6 +29,7 @@ namespace Cinema.Application.Features.Base
             T entity = _mapper.Map<T>(command);
             entity.Validate();
             var newEntity = _repository.Add(entity);
+            _repository.Save();
             return newEntity;
         }
 
@@ -44,7 +45,8 @@ namespace Cinema.Application.Features.Base
 
         public virtual bool Remove(long id)
         {
-            return _repository.Remove(id);
+            _repository.Remove(id);
+            return _repository.Save();
         }
 
         public virtual bool Update(AbstractUpdateCommand<T> command)
@@ -54,9 +56,9 @@ namespace Cinema.Application.Features.Base
             {
                 _mapper.Map(command, previousEntity);
                 previousEntity.Validate();
-                return _repository.Update(previousEntity);
+                 _repository.Update(previousEntity);
             }
-            return false;
+            return _repository.Save();
         }
     }
 }

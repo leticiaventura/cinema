@@ -58,6 +58,10 @@
     <Compile Include="Features\Lounges\Interfaces\ILoungeRepository.cs" />
     <Compile Include="Features\Lounges\Interfaces\ILoungeService.cs" />
     <Compile Include="Features\Lounges\Lounge.cs" />
+    <Compile Include="Features\Purchases\Interfaces\IPurchaseRepository.cs" />
+    <Compile Include="Features\Purchases\Interfaces\IPurchaseService.cs" />
+    <Compile Include="Features\Purchases\Purchase.cs" />
+    <Compile Include="Features\Purchases\PurchaseSnack.cs" />
     <Compile Include="Features\Sessions\Interfaces\ISessionRepository.cs" />
     <Compile Include="Features\Sessions\Interfaces\ISessionService.cs" />
     <Compile Include="Features\Sessions\Session.cs" />
@@ -78,5 +82,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

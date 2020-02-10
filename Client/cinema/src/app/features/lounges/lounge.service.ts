@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Lounge, DataGridLounges, LoungeAddCommand, LoungeUpdateCommand, LoungeCheckNameQuery } from './shared/lounge.model';
+import { API } from 'src/main-config';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class LoungeService {
 
     constructor(private http: HttpClient) { }
 
-    private api = "https://localhost:44374/api/lounges";
+    private api = `${API}api/lounges`;
 
     findLoungeById(loungeId: number): Observable<Lounge> {
         return this.http.get<Lounge>(`${this.api}/${loungeId}`);

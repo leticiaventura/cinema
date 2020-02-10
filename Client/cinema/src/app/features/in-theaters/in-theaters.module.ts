@@ -1,3 +1,4 @@
+import { MaterialModule } from './../../shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +11,8 @@ import { CustomerAuthGuard } from 'src/app/shared/guards/customer-auth.guard';
   declarations: [InTheatersComponent],
   imports: [
     CommonModule,
-    InTheatersRoutingModule
+    InTheatersRoutingModule,
+    MaterialModule
   ],
   providers: [CustomerAuthGuard]
 })

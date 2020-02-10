@@ -1,1 +1,31 @@
-<p>in-theaters works!</p>
+<mat-tab-group>
+    <mat-tab *ngFor="let date of dates" label="{{ date.date | date:'EEE, dd/MM'}}">
+        <div *ngFor="let session of date.sessions" style="padding: 10px; display: inline-block; vertical-align: top"
+            class="col-lg-3 col-md-6 col-sm-12 vertical-space">
+
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title class="vertical-space">{{ session.movie.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <img mat-card-image class="vertical-space" src="data:image/jpeg;base64,{{ session.movie.image }}"
+                        alt="{{ session.movie.name }}">
+
+                    <p> {{session.movie.description}} </p>
+                    <br>
+                    <p>{{ session.lounge.name }}: </p>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ audioDisplay[session.movie.audio] }}</button>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ animationDisplay[session.movie.animation] }}</button>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ session.start | date:'shortTime' }}</button>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="buy(session)"> <i class="material-icons">add_shopping_cart</i>Comprar</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+    </mat-tab>
+</mat-tab-group>

@@ -72,7 +72,7 @@ namespace Cinema.Application.Tests.Features.Users
             var userCmd = ObjectMother.GetUserUpdateCommand();
             var updated = true;
             _mockUserRepository.Setup(e => e.GetById(userCmd.Id)).Returns(user);
-            _mockUserRepository.Setup(r => r.Update(user)).Returns(updated);
+            _mockUserRepository.Setup(r => r.Save()).Returns(updated);
 
             //Action
             var updateUser = _userService.Update(userCmd);
@@ -109,7 +109,7 @@ namespace Cinema.Application.Tests.Features.Users
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockUserRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockUserRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _userService.Remove(idToRemove);
@@ -125,7 +125,7 @@ namespace Cinema.Application.Tests.Features.Users
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = false;
-            _mockUserRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockUserRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _userService.Remove(idToRemove);

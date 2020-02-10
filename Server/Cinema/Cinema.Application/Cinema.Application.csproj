@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\Base\AbstractService.cs" />
+    <Compile Include="Features\Purchases\Commands\PurchaseAddCommand.cs" />
+    <Compile Include="Features\Purchases\MappingProfile.cs" />
+    <Compile Include="Features\Purchases\PurchaseService.cs" />
     <Compile Include="Features\Sessions\Commands\SessionAddCommand.cs" />
     <Compile Include="Features\Sessions\MappingProfile.cs" />
     <Compile Include="Features\Sessions\Queries\SessionGetAvailableLoungesQuery.cs" />

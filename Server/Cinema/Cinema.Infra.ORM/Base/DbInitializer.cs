@@ -18,7 +18,7 @@ namespace Cinema.Infra.ORM.Base
     /// Inicializador para criar o banco de dados quando não existir. Possui um método Seed para popular o banco.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class DbInitializer : CreateDatabaseIfNotExists<BaseContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<BaseContext>
     {
         protected override void Seed(BaseContext context)
         {
@@ -103,29 +103,21 @@ namespace Cinema.Infra.ORM.Base
             #endregion
 
             #region SESSIONS
-            Session session = new Session
+            for (int i = 0; i < 7; i++)
             {
-                Start = DateTime.Now.AddDays(6),
-                Price = 5,
-                MovieId = 1,
-                LoungeId = 1,
-                Movie = movie,
-                Lounge = lounge1,
-                End = DateTime.Now.AddDays(5).AddMinutes(movie.Length)
-            };
-            context.Sessions.Add(session);
-            Session session2 = new Session
-            {
-                Start = DateTime.Now.AddDays(5),
-                Price = 5,
-                MovieId = 1,
-                LoungeId = 1,
-                Movie = movie,
-                Lounge = lounge1,
-                End = DateTime.Now.AddDays(5).AddMinutes(movie.Length)
-            };
-            context.Sessions.Add(session);
-            context.Sessions.Add(session2);
+                Session session = new Session
+                {
+                    Start = DateTime.Now.AddDays(i).AddHours(1),
+                    Price = 5,
+                    MovieId = 1,
+                    LoungeId = 1,
+                    Movie = movie,
+                    Lounge = lounge1,
+                    End = DateTime.Now.AddDays(i).AddMinutes(movie.Length + 1)
+                };
+                context.Sessions.Add(session);
+            }
+            
             #endregion
         }
     }

@@ -71,7 +71,7 @@ namespace Cinema.Application.Tests.Features.Movies
             var movieCmd = ObjectMother.GetMovieUpdateCommand();
             var updated = true;
             _mockMovieRepository.Setup(e => e.GetById(movieCmd.Id)).Returns(movie);
-            _mockMovieRepository.Setup(r => r.Update(movie)).Returns(updated);
+            _mockMovieRepository.Setup(r => r.Save()).Returns(updated);
 
             //Action
             var updateMovie = _movieService.Update(movieCmd);
@@ -108,7 +108,7 @@ namespace Cinema.Application.Tests.Features.Movies
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockMovieRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockMovieRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _movieService.Remove(idToRemove);
@@ -124,7 +124,7 @@ namespace Cinema.Application.Tests.Features.Movies
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = false;
-            _mockMovieRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockMovieRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _movieService.Remove(idToRemove);

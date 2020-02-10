@@ -1,9 +1,9 @@
 import { ModalMessageComponent } from './../../../shared/modal-message/modal-message.component';
 import { UserService } from './../user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, AbstractControl } from "@angular/forms";
 import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ModalComponent } from './../../../shared/modal/modal.component';
 
@@ -32,7 +32,12 @@ export class UserRegisterFormComponent implements OnInit {
     reactiveForm() {
         this.formGroup = this.fb.group({
             name: ['', [Validators.required]],
-            email: ['', [Validators.required]],
+            email: ['',
+            {
+                validators: [Validators.required],
+                asyncValidators: [this.validateEmail.bind(this)],
+                updateOn: 'change'
+            }],
             password: ['', [Validators.minLength(3), Validators.required]],
             permissionLevel: ['', [Validators.required]]
         })
@@ -66,6 +71,12 @@ export class UserRegisterFormComponent implements OnInit {
 
     cancel() {
         this.router.navigate(['../'], { relativeTo: this.activeRoute });
+    }
+
+    validateEmail(control: AbstractControl) {
+        return this.userService.checkEmail(control.value, this.formGroup.value.id).pipe(map(res => {
+            return res ? { emailTaken: true } : null;
+        }));
     }
 
 }

@@ -196,6 +196,7 @@
     <Compile Include="AuthProvider\OAuthProvider.cs" />
     <Compile Include="Controllers\Base\ApiControllerBase.cs" />
     <Compile Include="Controllers\Base\PublicController.cs" />
+    <Compile Include="Controllers\Purchases\PurchasesController.cs" />
     <Compile Include="Controllers\Sessions\SessionsController.cs" />
     <Compile Include="Controllers\Snacks\SnacksController.cs" />
     <Compile Include="Controllers\Movies\MoviesController.cs" />

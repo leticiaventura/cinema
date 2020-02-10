@@ -43,7 +43,7 @@ namespace Cinema.Infra.ORM.Tests.Features.Snacks
             snack.Id.Should().NotBe(0);
             var expectedSnack = _context.Snacks.Find(snack.Id);
             expectedSnack.Should().NotBeNull();
-            expectedSnack.Should().Be(snack);
+            expectedSnack.Name.Should().Be(snack.Name);
         }
 
         #endregion
@@ -115,7 +115,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Snacks
         public void Snacks_Repository_Should_Remove_Sucessfully()
         {
             // Action
-            var removed = _repository.Remove(_snackBase.Id);
+            _repository.Remove(_snackBase.Id);
+            var removed = _repository.Save();
             // Assert
             removed.Should().BeTrue();
             _context.Snacks.Where(p => p.Id == _snackBase.Id).FirstOrDefault().Should().BeNull();
@@ -127,7 +128,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Snacks
             // Arrange
             var idInvalid = 10;
             // Action
-            var result = _repository.Remove(idInvalid);
+            _repository.Remove(idInvalid);
+            var result = _repository.Save();
             // Assert
             result.Should().BeFalse();
         }
@@ -143,7 +145,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Snacks
             var newValue = "newName";
             _snackBase.Name = newValue;
             //Action
-            var act = new Action(() => { modified = _repository.Update(_snackBase); });
+            _repository.Update(_snackBase);
+            var act = new Action(() => { modified = _repository.Save(); });
             // Assert
             act.Should().NotThrow<Exception>();
             modified.Should().BeTrue();

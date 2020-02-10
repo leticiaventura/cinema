@@ -43,7 +43,7 @@ namespace Cinema.Infra.ORM.Tests.Features.Sessions
             session.Id.Should().NotBe(0);
             var expectedSession = _context.Sessions.Find(session.Id);
             expectedSession.Should().NotBeNull();
-            expectedSession.Should().Be(session);
+            expectedSession.Movie.Name.Should().Be(session.Movie.Name);
         }
 
         #endregion
@@ -82,7 +82,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Sessions
         public void Sessions_Repository_Should_Remove_Sucessfully()
         {
             // Action
-            var removed = _repository.Remove(_sessionBase.Id);
+            _repository.Remove(_sessionBase.Id);
+            var removed = _repository.Save();
             // Assert
             removed.Should().BeTrue();
             _context.Sessions.Where(p => p.Id == _sessionBase.Id).FirstOrDefault().Should().BeNull();
@@ -94,7 +95,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Sessions
             // Arrange
             var idInvalid = 10;
             // Action
-            var result = _repository.Remove(idInvalid);
+            _repository.Remove(idInvalid);
+            var result = _repository.Save();
             // Assert
             result.Should().BeFalse();
         }
@@ -110,7 +112,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Sessions
             var newValue = 3;
             _sessionBase.PurchasedSeats = newValue;
             //Action
-            var act = new Action(() => { modified = _repository.Update(_sessionBase); });
+            _repository.Update(_sessionBase);
+            var act = new Action(() => { modified = _repository.Save(); });
             // Assert
             act.Should().NotThrow<Exception>();
             modified.Should().BeTrue();

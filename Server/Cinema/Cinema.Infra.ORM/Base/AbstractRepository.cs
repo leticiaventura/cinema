@@ -22,21 +22,19 @@ namespace Cinema.Infra.ORM.Base
         public virtual T Add(T entity)
         {
             entity = Table().Add(entity);
-            _context.SaveChanges();
             return entity;
         }
         #endregion
 
         #region UPDATE
-        public virtual bool Update(T entity)
+        public virtual void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            return _context.SaveChanges() > 0;
         }
         #endregion
 
         #region REMOVE
-        public virtual bool Remove(long id)
+        public virtual void Remove(long id)
         {
             DbSet<T> table = _context.Set<T>();
             var entity = Table().FirstOrDefault(e => e.Id == id);
@@ -44,7 +42,6 @@ namespace Cinema.Infra.ORM.Base
             {
                 _context.Entry(entity).State = EntityState.Deleted;
             }
-            return _context.SaveChanges() > 0;
         }
         #endregion
 
@@ -59,6 +56,11 @@ namespace Cinema.Infra.ORM.Base
             return Table().FirstOrDefault(e => e.Id == id);
         }
         #endregion
+
+        public bool Save()
+        {
+            return _context.SaveChanges() > 0;
+        }
 
         private DbSet<T> Table()
         {

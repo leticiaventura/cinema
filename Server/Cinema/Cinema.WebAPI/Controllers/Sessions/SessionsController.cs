@@ -1,8 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Cinema.Application.Features.Lounges.ViewModels;
 using Cinema.Application.Features.Sessions.Commands;
 using Cinema.Application.Features.Sessions.Queries;
@@ -16,7 +20,7 @@ using Microsoft.AspNet.OData.Query;
 
 namespace Cinema.WebAPI.Controllers.Sessions
 {
-    [Authorize(Roles = "Admin, Employee")]
+    [Authorize(Roles = "Admin, Employee, Customer")]
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api/sessions")]
     public class SessionsController : ApiControllerBase
@@ -39,7 +43,20 @@ namespace Cinema.WebAPI.Controllers.Sessions
         [Route("{id:int}")]
         public IHttpActionResult GetById(int id)
         {
-            return HandleQuery<Session, SessionViewModel>(_service.GetById(id));
+            return HandleCallback(_service.GetById(id));
+        }
+
+        [HttpGet]
+        [Route("by-date")]
+        public IHttpActionResult GetByDate()
+        {            
+            if (Request.RequestUri.ParseQueryString()["date"] != null)
+            {
+                DateTime date = Convert.ToDateTime(Request.RequestUri.ParseQueryString()["date"]).ToLocalTime();
+                List<Session> sessions = _service.GetAll().Where(x => x.Start.Year == date.Year && x.Start.Month == date.Month && x.Start.Day == date.Day).ToList();
+                return Ok(sessions);
+            }
+            return Ok(new List<SessionGridViewModel>());
         }
         #endregion HttpGet
 

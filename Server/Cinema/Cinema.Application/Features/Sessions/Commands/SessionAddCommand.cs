@@ -23,7 +23,7 @@ namespace Cinema.Application.Features.Sessions.Commands
         {
             public Validator(ISessionService service)
             {
-                RuleFor(c => c.Start).NotNull().NotEmpty().GreaterThan(DateTime.Now).WithMessage("A data deve ser superior à data atual.");
+                RuleFor(c => c.Start).NotNull().NotEmpty().GreaterThan(DateTime.Now.ToUniversalTime()).WithMessage("A data deve ser superior à data atual.");
                 RuleFor(c => c.MovieId).GreaterThan(0);
                 RuleFor(c => c.LoungeId).GreaterThan(0);
             }

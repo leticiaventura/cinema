@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { API } from 'src/main-config';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class SnackService {
 
     constructor(private http: HttpClient) { }
 
-    private api = "https://localhost:44374/api/snacks";
+    private api = `${API}api/snacks`;
 
     findSnackById(snackId: number): Observable<Snack> {
         return this.http.get<Snack>(`${this.api}/${snackId}`);

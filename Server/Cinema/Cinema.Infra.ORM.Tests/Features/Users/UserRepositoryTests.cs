@@ -44,7 +44,7 @@ namespace Cinema.Infra.ORM.Tests.Features.Users
             user.Id.Should().NotBe(0);
             var expectedUser = _context.Users.Find(user.Id);
             expectedUser.Should().NotBeNull();
-            expectedUser.Should().Be(user);
+            expectedUser.Email.Should().Be(user.Email);
         }
 
         #endregion
@@ -137,7 +137,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Users
         public void Users_Repository_Should_Remove_Sucessfully()
         {
             // Action
-            var removed = _repository.Remove(_userBase.Id);
+            _repository.Remove(_userBase.Id);
+            var removed = _repository.Save();
             // Assert
             removed.Should().BeTrue();
             _context.Users.Where(p => p.Id == _userBase.Id).FirstOrDefault().Should().BeNull();
@@ -149,7 +150,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Users
             // Arrange
             var idInvalid = 10;
             // Action
-            var result = _repository.Remove(idInvalid);
+            _repository.Remove(idInvalid);
+            var result = _repository.Save();
             // Assert
             result.Should().BeFalse();
         }
@@ -165,7 +167,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Users
             var newValue = "newName";
             _userBase.Name = newValue;
             //Action
-            var act = new Action(() => { modified = _repository.Update(_userBase); });
+            _repository.Update(_userBase);
+            var act = new Action(() => { modified = _repository.Save();  });
             // Assert
             act.Should().NotThrow<Exception>();
             modified.Should().BeTrue();

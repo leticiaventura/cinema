@@ -6,6 +6,7 @@ import { CookieHelperService } from './../../shared/cookie-helper/cookie-helper.
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../users/shared/user.model';
+import { API } from 'src/main-config';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,7 @@ export class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             })
         };
-        return this.httpClient.post(`https://localhost:44374/token`, body, httpOptions).pipe(
+        return this.httpClient.post(`${API}token`, body, httpOptions).pipe(
             catchError(this.error)
         );
     }
@@ -36,7 +37,7 @@ export class AuthService {
     }
 
     getPermission(user) {
-        this.httpClient.get(`https://localhost:44374/api/users/role`).subscribe((x: any) => {
+        this.httpClient.get(`${API}api/users/role`).subscribe((x: any) => {
             this.permission = x;
             this.applyPermission.emit(this.permission);
             this.router.navigate(['/']);

@@ -13,11 +13,12 @@ namespace Cinema.Application.Features.Sessions
     {
         public MappingProfile()
         {
-            CreateMap<SessionAddCommand, Session>();
+            CreateMap<SessionAddCommand, Session>()
+                .ForMember(d=> d.Start, o => o.MapFrom(value => value.Start.ToLocalTime()));
 
             CreateMap<SessionGetAvailableLoungesQuery, Session>()
-                .ForMember(d => d.Start, o => o.MapFrom(value => Convert.ToDateTime(value.Start)))
-                .ForMember(d => d.End, o => o.MapFrom(value => Convert.ToDateTime(value.Start).AddMinutes(value.MovieLength)));
+                .ForMember(d => d.Start, o => o.MapFrom(value => value.Start.ToLocalTime()))
+                .ForMember(d => d.End, o => o.MapFrom(value => value.Start.ToLocalTime().AddMinutes(value.MovieLength)));
 
             CreateMap<Session, SessionViewModel>()
                 .ForMember(d => d.Start, o => o.MapFrom(value => value.Start.ToString("o")));

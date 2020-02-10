@@ -12,11 +12,12 @@ const routes: Routes = [
     { path: 'snacks', loadChildren: () => import('./features/snacks/snacks.module').then(m => m.SnacksModule) },
     { path: 'sessoes', loadChildren: () => import('./features/sessions/sessions.module').then(m => m.SessionsModule) },
     { path: 'conta', loadChildren: () => import('./features/account/account.module').then(m => m.AccountsModule) },
+    { path: 'compras', loadChildren: () => import('./features/purchase/purchase.module').then(m => m.PurchaseModule) },
     {
         path: 'login',
         component: LoginComponent
     },
-    { path: '**', redirectTo: '/' }
+    { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

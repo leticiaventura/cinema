@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Diagnostics.CodeAnalysis;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Movies;
+using Cinema.Domain.Features.Purchases;
 using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Snacks;
 using Cinema.Domain.Features.Users;
@@ -23,6 +24,7 @@ namespace Cinema.Infra.ORM.Base
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Snack> Snacks { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

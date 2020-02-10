@@ -70,7 +70,7 @@ namespace Cinema.Application.Tests.Features.Snacks
             var snackCmd = ObjectMother.GetSnackUpdateCommand();
             var updated = true;
             _mockSnackRepository.Setup(e => e.GetById(snackCmd.Id)).Returns(snack);
-            _mockSnackRepository.Setup(r => r.Update(snack)).Returns(updated);
+            _mockSnackRepository.Setup(r => r.Save()).Returns(updated);
 
             //Action
             var updateSnack = _snackService.Update(snackCmd);
@@ -107,7 +107,7 @@ namespace Cinema.Application.Tests.Features.Snacks
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockSnackRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockSnackRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _snackService.Remove(idToRemove);
@@ -123,7 +123,7 @@ namespace Cinema.Application.Tests.Features.Snacks
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = false;
-            _mockSnackRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockSnackRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _snackService.Remove(idToRemove);

@@ -15,6 +15,9 @@ export class AccountComponent implements OnInit {
 
 	ngOnInit() {
         this.email = this.cookie.readCookie("user_mail");
+        if (!this.email){
+            this.router.navigate(['../login'], { relativeTo: this.route });
+        }
 	}
 
 	logout() {

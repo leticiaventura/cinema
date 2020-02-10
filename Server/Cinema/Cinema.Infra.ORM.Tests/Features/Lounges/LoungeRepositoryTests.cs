@@ -43,7 +43,7 @@ namespace Cinema.Infra.ORM.Tests.Features.Lounges
             lounge.Id.Should().NotBe(0);
             var expectedLounge = _context.Lounges.Find(lounge.Id);
             expectedLounge.Should().NotBeNull();
-            expectedLounge.Should().Be(lounge);
+            expectedLounge.Name.Should().Be(lounge.Name);
         }
 
         #endregion
@@ -115,7 +115,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Lounges
         public void Lounges_Repository_Should_Remove_Sucessfully()
         {
             // Action
-            var removed = _repository.Remove(_loungeBase.Id);
+             _repository.Remove(_loungeBase.Id);
+            var removed = _repository.Save();
             // Assert
             removed.Should().BeTrue();
             _context.Lounges.Where(p => p.Id == _loungeBase.Id).FirstOrDefault().Should().BeNull();
@@ -127,7 +128,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Lounges
             // Arrange
             var idInvalid = 10;
             // Action
-            var result = _repository.Remove(idInvalid);
+             _repository.Remove(idInvalid);
+            var result = _repository.Save();
             // Assert
             result.Should().BeFalse();
         }
@@ -143,7 +145,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Lounges
             var newValue = 66;
             _loungeBase.Seats = newValue;
             //Action
-            var act = new Action(() => { modified = _repository.Update(_loungeBase); });
+            _repository.Update(_loungeBase);
+            var act = new Action(() => { modified = _repository.Save(); });
             // Assert
             act.Should().NotThrow<Exception>();
             modified.Should().BeTrue();

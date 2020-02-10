@@ -73,7 +73,7 @@ namespace Cinema.Application.Tests.Features.Lounges
             var loungeCmd = ObjectMother.GetLoungeUpdateCommand();
             var updated = true;
             _mockLoungeRepository.Setup(e => e.GetById(loungeCmd.Id)).Returns(lounge);
-            _mockLoungeRepository.Setup(r => r.Update(lounge)).Returns(updated);
+            _mockLoungeRepository.Setup(r => r.Save()).Returns(updated);
 
             //Action
             var updateLounge = _loungeService.Update(loungeCmd);
@@ -110,7 +110,7 @@ namespace Cinema.Application.Tests.Features.Lounges
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockLoungeRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockLoungeRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _loungeService.Remove(idToRemove);
@@ -126,7 +126,7 @@ namespace Cinema.Application.Tests.Features.Lounges
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = false;
-            _mockLoungeRepository.Setup(e => e.Remove(idToRemove)).Returns(mockWasRemoved);
+            _mockLoungeRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _loungeService.Remove(idToRemove);

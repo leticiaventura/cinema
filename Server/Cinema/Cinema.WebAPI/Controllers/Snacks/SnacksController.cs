@@ -14,7 +14,7 @@ using Microsoft.AspNet.OData.Query;
 
 namespace Cinema.WebAPI.Controllers.Snacks
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Customer")]
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api/snacks")]
     public class SnacksController : ApiControllerBase
@@ -31,6 +31,14 @@ namespace Cinema.WebAPI.Controllers.Snacks
         public IHttpActionResult Get(ODataQueryOptions<Snack> queryOptions)
         {
             return HandleQueryable<Snack, SnackGridViewModel>(_service.GetAll(), queryOptions);
+        }   
+        
+        [HttpGet]
+        [Authorize(Roles = "Customer")]
+        [Route("purchase")]
+        public IHttpActionResult GetForPurchase()
+        {
+            return HandleCallback(_service.GetAll());
         }
 
         [HttpGet]
@@ -42,6 +50,7 @@ namespace Cinema.WebAPI.Controllers.Snacks
         #endregion HttpGet
 
         #region HttpPost
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IHttpActionResult Post(SnackAddCommand SnackCmd)
         {
@@ -53,6 +62,7 @@ namespace Cinema.WebAPI.Controllers.Snacks
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("name")]
         public IHttpActionResult CheckName(SnackCheckNameQuery query)
         {
@@ -62,6 +72,7 @@ namespace Cinema.WebAPI.Controllers.Snacks
 
         #region HttpPatch
         [HttpPatch]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Update(SnackUpdateCommand command)
         {
             var validator = command.Validate(_service);
@@ -75,6 +86,7 @@ namespace Cinema.WebAPI.Controllers.Snacks
 
         #region HttpDelete
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Delete([FromBody] long id)
         {
             return HandleCallback(_service.Remove(id));

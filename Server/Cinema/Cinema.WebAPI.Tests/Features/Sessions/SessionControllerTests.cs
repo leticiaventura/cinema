@@ -76,7 +76,7 @@ namespace Cinema.WebAPI.Tests.Features.Sessions
             IHttpActionResult callback = _sessionsController.GetById(id);
 
             // Assert
-            var httpResponse = callback.Should().BeOfType<OkNegotiatedContentResult<SessionViewModel>>().Subject;
+            var httpResponse = callback.Should().BeOfType<OkNegotiatedContentResult<Session>>().Subject;
             httpResponse.Content.Should().NotBeNull();
             httpResponse.Content.Id.Should().Be(id);
             _sessionServiceMock.Verify(s => s.GetById(id), Times.Once);

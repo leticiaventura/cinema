@@ -1,0 +1,118 @@
+<mat-horizontal-stepper #stepper style="background: #212121;">
+    <mat-step>
+        <div class="d-flex justify-content-center vertical-space">
+            <mat-card class="col-lg-3 col-md-5 col-sm-11">
+                <mat-card-header>
+                    <mat-card-title class="vertical-space">{{ session.movie.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <img mat-card-image class="vertical-space" src="data:image/jpeg;base64,{{ session.movie.image }}"
+                        alt="{{ session.movie.name }}">
+
+                    <p> {{session.movie.description}} </p>
+                    <br>
+                    <p>{{ session.lounge.name }}: </p>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ audioDisplay[session.movie.audio] }}</button>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ animationDisplay[session.movie.animation] }}</button>
+                    <button mat-stroked-button
+                        style="pointer-events: none;">{{ session.start | date:'shortTime' }}</button>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="d-flex justify-content-center vertical-space">
+            <button color="primary" class="col-lg-3 col-md-5 col-sm-11" style="width: 100%;" mat-raised-button
+                matStepperNext>Confirmar</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="formGroup">
+        <form [formGroup]="formGroup">
+            <div class="d-flex justify-content-center">
+                <div class="col-lg-4">
+                    <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
+                        <mat-form-field class="vertical-space">
+                            <input matInput placeholder="Quantidade de Lugares" formControlName="seats" type="number">
+                            <mat-error *ngIf="errorHandling('seats', 'required')">
+                                {{ requiredAlert }}
+                            </mat-error>
+                            <mat-error *ngIf="errorHandling('seats', 'max') || errorHandling('seats', 'min')">
+                                A quantidade de lugares disponíveis é: {{ freeSeats }}
+                            </mat-error>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center vertical-space">
+                <button mat-raised-button matStepperPrevious color="primary">Voltar</button>
+                <div style="width: 1%;"></div>
+                <button mat-raised-button matStepperNext color="primary">Avançar</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="formGroup">
+        <form [formGroup]="formGroup">
+            <div class="d-flex justify-content-center vertical-space">
+                <div *ngFor="let snack of snacks; let index = index;" style="padding-left: 10px; padding-right: 10px;">
+                    <mat-card style="display: inline-block;">
+                        <mat-card-header>
+                            <mat-card-title class="vertical-space">{{ snack.name }}</mat-card-title>
+                            <mat-card-subtitle>R$ {{ snack.price | number:'.2-2':'pt' }}</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content class="d-flex justify-content-center">
+                            <img mat-card-image style="height: 120px; width: auto;" class="vertical-space "
+                                src="data:image/jpeg;base64,{{ snack.image }}" alt="{{ snack.name }}">
+                        </mat-card-content>
+                        <mat-card-actions class="d-flex justify-content-center">
+                            <button mat-button style="margin: 0;padding: 0;" (click)="remove(snack)"> <i
+                                    class="material-icons">remove</i></button>
+                            <button mat-stroked-button
+                                style="pointer-events: none; margin: 0;padding: 0;">{{ snack.quantity }}</button>
+                            <button mat-button style="margin: 0;padding: 0;" (click)="add(snack)"> <i
+                                    class="material-icons">add</i></button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center vertical-space">
+                <button mat-raised-button matStepperPrevious color="primary">Voltar</button>
+                <div style="width: 1%;"></div>
+                <button mat-raised-button matStepperNext (click)="updateSnacks()" color="primary">Avançar</button>
+            </div>
+
+        </form>
+    </mat-step>
+    <mat-step>
+        <h3>Sessão</h3>
+        <p>Filme: {{session.movie.name}}</p>
+        <p>Data: {{ session.start | date:'short':'-300' }}</p>
+        <p>Duração: {{ session.movie.length }} minutos</p>
+        <p>Audio: {{ audioDisplay[session.movie.audio] }}</p>
+        <p>Animação: {{ animationDisplay[session.movie.animation] }}</p>
+        <p>Lugares: {{ formGroup.value.seats }}</p>
+        <p>Preço: R$ {{ session.price | number:'.2-2':'pt' }} </p>
+        <p><b>Total: R$ {{ session.price * formGroup.value.seats | number:'.2-2':'pt' }}</b></p>
+        <br>
+        <mat-divider></mat-divider><br>
+        <div *ngIf="formGroup.value.snacksArray.length">
+            <h3>Snacks</h3>
+            <div *ngFor="let snack of formGroup.value.snacksArray">
+                <p>Snack: {{snack.name}}</p>
+                <p>Quantiadade: {{snack.quantity}}</p>
+                <p>Preço: R$ {{snack.price | number:'.2-2':'pt'}} </p>
+                <p><b>Total: R$ {{ snack.price * snack.quantity | number:'.2-2':'pt' }}</b></p><br>
+            </div>
+            <mat-divider></mat-divider><br>
+        </div>
+
+        <h3>Valor Total: R$ {{totalPrice() | number:'.2-2':'pt'}} </h3>
+
+        <div class="d-flex justify-content-center vertical-space">
+            <button mat-raised-button matStepperPrevious color="primary">Voltar</button>
+            <div style="width: 1%;"></div>
+            <button mat-raised-button [disabled]="!formGroup.valid" (click)="submitForm()" color="primary">Concluir</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

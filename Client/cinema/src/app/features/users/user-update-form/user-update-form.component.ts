@@ -1,11 +1,11 @@
 import { ModalMessageComponent } from './../../../shared/modal-message/modal-message.component';
 import { ModalComponent } from './../../../shared/modal/modal.component';
 import { UserService } from './../user.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-update-form',
@@ -37,7 +37,12 @@ export class UserUpdateFormComponent implements OnInit {
         this.formGroup = this.fb.group({
             name: ['', [Validators.required]],
             id: ['', [Validators.required]],
-            email: ['', [Validators.required]],
+            email: ['',
+            {
+                validators: [Validators.required],
+                asyncValidators: [this.validateEmail.bind(this)],
+                updateOn: 'change'
+            }],
             password: ['', [Validators.minLength(3)]],
         })
     }
@@ -76,5 +81,11 @@ export class UserUpdateFormComponent implements OnInit {
 
     cancel() {
         this.router.navigate(['../../'], { relativeTo: this.activeRoute });
+    }
+
+    validateEmail(control: AbstractControl) {
+        return this.userService.checkEmail(control.value, this.formGroup.value.id).pipe(map(res => {
+            return res ? { emailTaken: true } : null;
+        }));
     }
 }

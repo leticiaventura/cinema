@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Cinema.Domain.Common;
 using Cinema.Domain.Exceptions;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Movies;
+using Cinema.Domain.Features.Purchases;
 
 namespace Cinema.Domain.Features.Sessions
 {
@@ -16,6 +18,7 @@ namespace Cinema.Domain.Features.Sessions
         public long LoungeId { get; set; }
         public double Price { get; set; }
         public int PurchasedSeats { get; set; }
+        public Collection<Purchase> Purchases { get; set; }
 
         public override void Validate()
         {

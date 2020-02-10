@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -8,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute,) { }
 
   ngOnInit() {
+  }
+
+  checkAccount(){
+    this.router.navigate(['./conta'], { relativeTo: this.activeRoute });
   }
 
 }

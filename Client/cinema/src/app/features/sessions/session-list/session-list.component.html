@@ -22,12 +22,12 @@
 
                             <ng-container matColumnDef="start">
                                 <mat-header-cell *matHeaderCellDef>Início</mat-header-cell>
-                                <mat-cell *matCellDef="let session">{{session.start | date:'short':'-600'}}</mat-cell>
+                                <mat-cell *matCellDef="let session">{{session.start | date:'short':'-300'}}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="end">
                                 <mat-header-cell *matHeaderCellDef>Fim</mat-header-cell>
-                                <mat-cell *matCellDef="let session">{{session.end | date:'shortTime':'-600'}}</mat-cell>
+                                <mat-cell *matCellDef="let session">{{session.end | date:'shortTime':'-300'}}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="lounge">

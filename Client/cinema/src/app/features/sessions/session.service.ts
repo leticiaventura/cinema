@@ -5,6 +5,7 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular
 import { Observable, throwError } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { DataGridMovies } from '../movies/shared/movie.model';
+import { API } from 'src/main-config';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class SessionService {
 
     constructor(private http: HttpClient) { }
 
-    private api = "https://localhost:44374/api/sessions";
+    private api = `${API}api/sessions`;
 
     findSessionById(sessionId: number): Observable<Session> {
         return this.http.get<Session>(`${this.api}/${sessionId}`);

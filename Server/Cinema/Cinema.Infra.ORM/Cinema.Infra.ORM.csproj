@@ -54,6 +54,8 @@
     <Compile Include="Base\AbstractRepository.cs" />
     <Compile Include="Base\BaseContext.cs" />
     <Compile Include="Base\DbInitializer.cs" />
+    <Compile Include="Features\Purchases\PurchaseReporitory.cs" />
+    <Compile Include="Features\Purchases\PurchaseConfig.cs" />
     <Compile Include="Features\Snacks\SnackConfig.cs" />
     <Compile Include="Features\Snacks\SnackRepository.cs" />
     <Compile Include="Features\Movies\MovieConfig.cs" />
@@ -80,6 +82,7 @@
       <Name>Cinema.Infra</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

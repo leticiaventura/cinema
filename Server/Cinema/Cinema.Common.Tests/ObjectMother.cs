@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Cinema.Application.Features.Snacks.Commands;
 using Cinema.Application.Features.Users.Commands;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Movies;
+using Cinema.Domain.Features.Purchases;
 using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Snacks;
 using Cinema.Domain.Features.Users;
@@ -189,6 +191,24 @@ namespace Cinema.Common.Tests
                 MovieId = 1,
                 Price = 15,
                 Start = DateTime.Now.AddDays(7)
+            };
+        }
+        #endregion
+
+        #region Purchase
+        public static Purchase GetDefaultPurchase()
+        {
+            return new Purchase
+            {
+                Id = 1,
+                Date = DateTime.Now,
+                Seats = 3,
+                MovieName = GetDefaultMovie().Name,
+                Session = GetDefaultSession(),
+                SessionId = 1,
+                SnacksArray = new List<PurchaseSnack>(),
+                User = GetDefaultUser(),
+                UserId = 1
             };
         }
         #endregion

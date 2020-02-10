@@ -3,18 +3,21 @@ using System.Web.Http;
 using AutoMapper;
 using Cinema.Application.Features.Lounges;
 using Cinema.Application.Features.Movies;
+using Cinema.Application.Features.Purchases;
 using Cinema.Application.Features.Sessions;
 using Cinema.Application.Features.Snacks;
 using Cinema.Application.Features.Users;
 using Cinema.Application.Mapping;
 using Cinema.Domain.Features.Lounges.Interfaces;
 using Cinema.Domain.Features.Movies.Interfaces;
+using Cinema.Domain.Features.Purchases.Interfaces;
 using Cinema.Domain.Features.Sessions.Interfaces;
 using Cinema.Domain.Features.Snacks.Interfaces;
 using Cinema.Domain.Features.Users.Interfaces;
 using Cinema.Infra.ORM.Base;
 using Cinema.Infra.ORM.Features.Lounges;
 using Cinema.Infra.ORM.Features.Movies;
+using Cinema.Infra.ORM.Features.Purchases;
 using Cinema.Infra.ORM.Features.Sessions;
 using Cinema.Infra.ORM.Features.Snacks;
 using Cinema.Infra.ORM.Features.Users;
@@ -70,7 +73,10 @@ namespace Cinema.WebAPI.IoC
             container.Register<ISnackRepository, SnackRepository>();
             
             container.Register<ISessionService, SessionService>();
-            container.Register<ISessionRepository, SessionRepository>();
+            container.Register<ISessionRepository, SessionRepository>();            
+            
+            container.Register<IPurchaseService, PurchaseService>();
+            container.Register<IPurchaseRepository, PurchaseRepository>();
 
             container.Register<Mapper>(() => mapped, Lifestyle.Singleton);
             container.Register<BaseContext>(() => new BaseContext(), Lifestyle.Scoped);

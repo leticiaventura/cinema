@@ -20,8 +20,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         MaterialModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FormsModule,
-        MaterialModule
+        FormsModule
     ],
     providers: [AdminAuthGuard, LoungeResolveService]
 })

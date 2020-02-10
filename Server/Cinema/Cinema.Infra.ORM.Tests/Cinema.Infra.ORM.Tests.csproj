@@ -83,6 +83,7 @@
     <Compile Include="Context\FakeDbContext.cs" />
     <Compile Include="Features\Lounges\LoungeRepositoryTests.cs" />
     <Compile Include="Features\Movies\MovieRepositoryTests.cs" />
+    <Compile Include="Features\Purchases\PurchaseRepositoryTests.cs" />
     <Compile Include="Features\Sessions\SessionRepositoryTests.cs" />
     <Compile Include="Features\Snacks\SnackRepositoryTests.cs" />
     <Compile Include="Features\Users\UserRepositoryTests.cs" />

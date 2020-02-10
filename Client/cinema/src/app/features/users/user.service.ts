@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { API } from 'src/main-config';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    private api = "https://localhost:44374/api/users";
+    private api = `${API}api/users`;    
 
     findUserById(userId: number): Observable<User> {
         return this.http.get<User>(`${this.api}/${userId}`);
@@ -61,6 +62,12 @@ export class UserService {
             body: data
         };
         return this.http.delete(this.api, httpOptions).pipe(
+            catchError(this.error)
+        );
+    }
+
+    checkEmail(email, id): Observable<any> {
+        return this.http.post(this.api + "/email", {email: email, id: id}).pipe(
             catchError(this.error)
         );
     }

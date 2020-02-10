@@ -43,7 +43,7 @@ namespace Cinema.Infra.ORM.Tests.Features.Movies
             movie.Id.Should().NotBe(0);
             var expectedMovie = _context.Movies.Find(movie.Id);
             expectedMovie.Should().NotBeNull();
-            expectedMovie.Should().Be(movie);
+            expectedMovie.Name.Should().Be(movie.Name);
         }
 
         #endregion
@@ -115,7 +115,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Movies
         public void Movies_Repository_Should_Remove_Sucessfully()
         {
             // Action
-            var removed = _repository.Remove(_movieBase.Id);
+             _repository.Remove(_movieBase.Id);
+            var removed = _repository.Save();
             // Assert
             removed.Should().BeTrue();
             _context.Movies.Where(p => p.Id == _movieBase.Id).FirstOrDefault().Should().BeNull();
@@ -127,7 +128,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Movies
             // Arrange
             var idInvalid = 10;
             // Action
-            var result = _repository.Remove(idInvalid);
+             _repository.Remove(idInvalid);
+            var result = _repository.Save();
             // Assert
             result.Should().BeFalse();
         }
@@ -143,7 +145,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Movies
             var newValue = "newName";
             _movieBase.Name = newValue;
             //Action
-            var act = new Action(() => { modified = _repository.Update(_movieBase); });
+            _repository.Update(_movieBase);
+            var act = new Action(() => { modified = _repository.Save(); });
             // Assert
             act.Should().NotThrow<Exception>();
             modified.Should().BeTrue();
