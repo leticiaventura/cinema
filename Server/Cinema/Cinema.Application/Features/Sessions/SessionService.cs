@@ -33,6 +33,7 @@ namespace Cinema.Application.Features.Sessions
                 throw new BusinessException(ErrorCodes.BadRequest, "A sala selecionada não está disponível.");
 
             var newSession = _repository.Add(session);
+            _repository.Save();
             return new Session { Id = newSession.Id };
         }
 
