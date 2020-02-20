@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
                 break;
             case Permission.customer: this.router.navigateByUrl('/em-cartaz');
                 break;
-            case Permission.employee: this.router.navigateByUrl('/disponibilidade-sessoes');
+            case Permission.employee: this.router.navigateByUrl('/bilhetes');
                 break;
             default: this.router.navigateByUrl('/login');
         }

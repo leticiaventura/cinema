@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Snack } from '../snacks/shared/snack.model';
 import { API } from 'src/main-config';
+import { PurchasedTickets } from '../check-in/check-in.model';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,25 @@ export class PurchaseService {
             param = param.set('$filter', filter)
         }
         return this.http.get<PurchasedSessions>(this.api + 'api/purchases', {
+            params: param
+        });
+    }
+
+    findAllTickets(filterName = '', filterDate = '', skip = 0, top = 10): Observable<PurchasedTickets> {
+        var param = new HttpParams()
+            .set('$skip', skip.toString())
+            .set('$top', top.toString())
+            .set('$count', 'true');
+
+        if (filterName) {
+            param = param.set('$filterName', filterName)
+        }
+        if (filterDate){
+            param = param.set('$filterDate', filterDate)
+        } else {
+            param = param.set('$filterDate', new Date().toISOString())
+        }
+        return this.http.get<PurchasedTickets>(this.api + 'api/purchases/check-in', {
             params: param
         });
     }

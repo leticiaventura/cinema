@@ -9,8 +9,7 @@ import 'hammerjs';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    showNavBar: boolean = false;
-    showSideBar: boolean = false;
+    permission: Permission = Permission.none;
 
     constructor(private authService: AuthService) {
     }
@@ -22,20 +21,19 @@ export class AppComponent {
         });
     }
 
+    private isCustomer() {
+        return this.permission == Permission.customer;
+    }
+
+    private isAdmin() {
+        return this.permission == Permission.admin;
+    }
+
+    private isEmployee() {
+        return this.permission == Permission.employee;
+    }
+
     private processPermission(permission: Permission) {
-        switch (permission) {
-            case Permission.customer:
-                this.showNavBar = true;
-                this.showSideBar = false;
-                break;
-            case Permission.admin:
-                this.showSideBar = true;
-                this.showNavBar = false;
-                break;
-            default:
-                this.showSideBar = false;
-                this.showNavBar = false;
-                break;
-        }
+        this.permission = permission;
     }
 }

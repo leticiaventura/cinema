@@ -51,21 +51,64 @@ namespace Cinema.WebAPI.Controllers.Purchases
         public IHttpActionResult Get(ODataQueryOptions<Purchase> queryOptions)
         {
             string user = ((ClaimsIdentity)User.Identity).Claims.ToArray()[0].Value;
-
-            var all = _service.GetAll().Where(x => x.User.Email.Equals(user));
-            int count = all.Count();
             string filter = queryOptions.Filter == null ? "" : queryOptions.Filter.RawValue;
+
+            var all = _service.GetAll()
+                .Where(x => x.User.Email.Equals(user))
+                .Where(x => x.MovieName.StartsWith(filter)
+                    || x.SessionDate.StartsWith(filter)
+                    || x.Session.Lounge.Name.StartsWith(filter));
+
+            int count = all.Count();
+
             all = all.OrderBy(x => x.Id)
                 .Skip(queryOptions.Skip.Value)
-                .Take(queryOptions.Top.Value)
-                .Where(x => x.MovieName.StartsWith(filter) 
-                    || x.SessionDate.StartsWith(filter) 
-                    || x.Session.Lounge.Name.StartsWith(filter));
+                .Take(queryOptions.Top.Value);
 
             var result = _mapper.Map<IList<PurchaseGridViewModel>>(all.ToList());
 
             var pageResult = new PageResult<PurchaseGridViewModel>(result, null, count);
             return Ok(pageResult);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Employee")]
+        [Route("check-in")]
+        public IHttpActionResult FindTickets(ODataQueryOptions<Purchase> queryOptions)
+        {
+            var allTickets = _service.GetAll();
+            allTickets = FilterByDate(allTickets);
+            allTickets = FilterByName(allTickets);
+            int count = allTickets.Count();
+
+            allTickets = allTickets.OrderBy(x => x.Id)
+                .Skip(queryOptions.Skip.Value)
+                .Take(queryOptions.Top.Value);
+
+            var result = _mapper.Map<IList<PurchasedTicketGridViewModel>>(allTickets.ToList());
+
+            var pageResult = new PageResult<PurchasedTicketGridViewModel>(result, null, count);
+            return Ok(pageResult);
+        }
+
+        private IQueryable<Purchase> FilterByDate(IQueryable<Purchase> allTickets)
+        {
+            if (!string.IsNullOrEmpty(Request.RequestUri.ParseQueryString()["$filterDate"]))
+            {
+                string date = Convert.ToDateTime(Request.RequestUri.ParseQueryString()["$filterDate"]).ToLocalTime().ToShortDateString();
+                allTickets = allTickets.Where(x => x.SessionDate.Equals(date));
+            }
+            return allTickets;
+        }
+
+        private IQueryable<Purchase> FilterByName(IQueryable<Purchase> allTickets)
+        {
+            if (!string.IsNullOrEmpty(Request.RequestUri.ParseQueryString()["$filterName"]))
+            {
+                string name = Request.RequestUri.ParseQueryString()["$filterName"];
+                allTickets = allTickets.Where(x => x.User.Name.Contains(name));
+            }
+            return allTickets;
         }
     }
 }

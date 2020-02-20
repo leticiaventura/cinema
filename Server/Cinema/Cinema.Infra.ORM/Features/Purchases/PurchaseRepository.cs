@@ -17,7 +17,7 @@ namespace Cinema.Infra.ORM.Features.Purchases
         }
         public override IQueryable<Purchase> GetAll()
         {
-            return _context.Purchases.Include(s => s.Session);
+            return _context.Purchases.Include(s => s.Session).Include(s => s.User);
         }
     }
 }

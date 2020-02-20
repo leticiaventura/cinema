@@ -20,6 +20,12 @@ namespace Cinema.Application.Features.Purchases
                 .ForMember(d => d.Movie, o => o.MapFrom(value => value.MovieName))
                 .ForMember(d => d.Lounge, o => o.MapFrom(value => value.Session.Lounge.Name))
                 .ForMember(d => d.Date, o => o.MapFrom(value => value.SessionDate));
+
+            CreateMap<Purchase, PurchasedTicketGridViewModel>()
+                .ForMember(d => d.Movie, o => o.MapFrom(value => value.MovieName))
+                .ForMember(d => d.Lounge, o => o.MapFrom(value => value.Session.Lounge.Name))
+                .ForMember(d => d.Date, o => o.MapFrom(value => value.Session.Start.ToString("o")))
+                .ForMember(d => d.Email, o => o.MapFrom(value => value.User.Email));
         }
     }
 }

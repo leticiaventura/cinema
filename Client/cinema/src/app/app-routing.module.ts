@@ -1,3 +1,4 @@
+import { CheckInModule } from './features/check-in/check-in.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'sessoes', loadChildren: () => import('./features/sessions/sessions.module').then(m => m.SessionsModule) },
     { path: 'conta', loadChildren: () => import('./features/account/account.module').then(m => m.AccountsModule) },
     { path: 'compras', loadChildren: () => import('./features/purchase/purchase.module').then(m => m.PurchaseModule) },
+    { path: 'bilhetes', loadChildren: () => import('./features/check-in/check-in.module').then(m => m.CheckInModule) },
     {
         path: 'login',
         component: LoginComponent

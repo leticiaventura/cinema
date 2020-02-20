@@ -54,7 +54,7 @@
     <Compile Include="Base\AbstractRepository.cs" />
     <Compile Include="Base\BaseContext.cs" />
     <Compile Include="Base\DbInitializer.cs" />
-    <Compile Include="Features\Purchases\PurchaseReporitory.cs" />
+    <Compile Include="Features\Purchases\PurchaseRepository.cs" />
     <Compile Include="Features\Purchases\PurchaseConfig.cs" />
     <Compile Include="Features\Snacks\SnackConfig.cs" />
     <Compile Include="Features\Snacks\SnackRepository.cs" />
