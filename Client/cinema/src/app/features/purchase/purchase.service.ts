@@ -1,5 +1,6 @@
+import { PurchasedSessions } from './../history/history.model';
 import { catchError } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { SessionService } from './../sessions/session.service';
 import { Session } from './../sessions/shared/session.model';
@@ -22,9 +23,23 @@ export class PurchaseService {
     }
 
     add(data): Observable<any> {
-        return this.http.post(this.api+'api/purchases', data).pipe(
+        return this.http.post(this.api + 'api/purchases', data).pipe(
             catchError(this.error)
         );
+    }
+
+    findAllPurchasesByUser(filter = '', skip = 0, top = 10): Observable<PurchasedSessions> {
+        var param = new HttpParams()
+            .set('$skip', skip.toString())
+            .set('$top', top.toString())
+            .set('$count', 'true');
+
+        if (filter) {
+            param = param.set('$filter', filter)
+        }
+        return this.http.get<PurchasedSessions>(this.api + 'api/purchases', {
+            params: param
+        });
     }
 
     error(error: HttpErrorResponse) {

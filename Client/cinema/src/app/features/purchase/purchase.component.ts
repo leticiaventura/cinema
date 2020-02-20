@@ -111,9 +111,9 @@ export class PurchaseComponent implements OnInit {
     }
 
     totalPrice() {
-        if (this.formGroup.value.snacksArray.length) {
-            return (this.formGroup.value.snacksArray.map(snack => snack.quantity * snack.price).reduce((acc, cur) => acc + cur)) +
-                this.session.price * this.formGroup.value.seats;
-        }
+        var total = this.formGroup.value.snacksArray.length ? this.formGroup.value.snacksArray.map(snack => snack.quantity * snack.price).reduce((acc, cur) => acc + cur) : 0;
+        total += this.session.price * this.formGroup.value.seats;
+        return total;
     }
 }
+
