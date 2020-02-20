@@ -36,6 +36,7 @@ namespace Cinema.Application.Features.Purchases
             purchase.Date = DateTime.Now;
             purchase.MovieName = session.Movie.Name;
             purchase.Total = purchase.CalculateTotal();
+            purchase.SessionDate = purchase.Session.Start.ToShortDateString();
 
             purchase.Validate();
             session.PurchasedSeats += ((PurchaseAddCommand)command).Seats;

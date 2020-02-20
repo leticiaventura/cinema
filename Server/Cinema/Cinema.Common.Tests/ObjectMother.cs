@@ -208,7 +208,8 @@ namespace Cinema.Common.Tests
                 SessionId = 1,
                 SnacksArray = new List<PurchaseSnack>(),
                 User = GetDefaultUser(),
-                UserId = 1
+                UserId = 1,
+                SessionDate = DateTime.Now.ToShortDateString()
             };
         }
         #endregion

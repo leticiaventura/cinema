@@ -18,6 +18,7 @@ namespace Cinema.Domain.Features.Purchases
         public DateTime Date { get; set; }
         public long SessionId { get; set; }
         public Session Session { get; set; }
+        public string SessionDate { get; set; }
         public string MovieName { get; set; }
         public List<PurchaseSnack> SnacksArray { get; set; }
         public string XmlSnacks { get => SerializeSnack(); set { } }

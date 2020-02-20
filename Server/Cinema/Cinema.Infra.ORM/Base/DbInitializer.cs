@@ -18,7 +18,7 @@ namespace Cinema.Infra.ORM.Base
     /// Inicializador para criar o banco de dados quando não existir. Possui um método Seed para popular o banco.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class DbInitializer : CreateDatabaseIfNotExists<BaseContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<BaseContext>
     {
         protected override void Seed(BaseContext context)
         {
