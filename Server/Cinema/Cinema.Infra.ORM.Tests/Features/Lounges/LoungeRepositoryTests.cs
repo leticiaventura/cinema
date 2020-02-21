@@ -142,8 +142,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Lounges
         {
             // Arrange
             var modified = false;
-            var newValue = 66;
-            _loungeBase.Seats = newValue;
+            var newValue = 9;
+            _loungeBase.Rows = newValue;
             //Action
             _repository.Update(_loungeBase);
             var act = new Action(() => { modified = _repository.Save(); });

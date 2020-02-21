@@ -8,7 +8,8 @@ namespace Cinema.Domain.Features.Lounges
     public class Lounge : Entity
     {
         public String Name { get; set; }
-        public int Seats { get; set; }
+        public int Rows { get; set; }
+        public int Columns { get; set; }
         public Collection<Session> Sessions { get; set; }
     }
 }

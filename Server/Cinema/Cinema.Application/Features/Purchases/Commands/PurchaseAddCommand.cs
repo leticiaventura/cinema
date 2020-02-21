@@ -11,8 +11,8 @@ namespace Cinema.Application.Features.Purchases.Commands
     public class PurchaseAddCommand : AbstractAddCommand<Purchase>
     {
         public virtual long SessionId { get; set; }
-        public virtual ICollection<PurchaseSnack> snacksArray { get; set; }
-        public virtual int Seats { get; set; }
+        public virtual ICollection<PurchaseSnack> SnacksArray { get; set; }
+        public virtual ICollection<Seat> SeatsArray { get; set; }
         public virtual string UserEmail { get; set; }
 
         public override ValidationResult Validate(IService<Purchase> service)
@@ -25,7 +25,7 @@ namespace Cinema.Application.Features.Purchases.Commands
             public Validator(IPurchaseService service)
             {
                 RuleFor(c => c.SessionId).GreaterThan(0);
-                RuleFor(c => c.Seats).GreaterThan(0);
+                RuleFor(x => x.SeatsArray.Count).GreaterThan(0);
             }
         }
     }

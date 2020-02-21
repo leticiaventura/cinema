@@ -18,15 +18,27 @@
                 </mat-error>
             </mat-form-field>
 
-            <!-- Email -->
+            <!-- Linhas de assentos -->
             <mat-form-field class="vertical-space">
-                <input matInput placeholder="Lugares" formControlName="seats" type="number">
+                <input matInput placeholder="Quantidade de linhas de assentos" formControlName="rows" type="number">
                 <!-- error -->
-                <mat-error *ngIf="errorHandling('seats', 'required')">
+                <mat-error *ngIf="errorHandling('rows', 'required')">
                     {{ requiredAlert }}
                 </mat-error>
-                <mat-error *ngIf="errorHandling('seats', 'min') || errorHandling('seats', 'max')">
-                    A quantidade de lugares deve estar entre 20 e 100
+                <mat-error *ngIf="errorHandling('rows', 'min') || errorHandling('rows', 'max')">
+                    A quantidade de linhas deve estar entre 5 e 10
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Colunas de assentos -->
+            <mat-form-field class="vertical-space">
+                <input matInput placeholder="Quantidade de colunas de assentos" formControlName="columns" type="number">
+                <!-- error -->
+                <mat-error *ngIf="errorHandling('columns', 'required')">
+                    {{ requiredAlert }}
+                </mat-error>
+                <mat-error *ngIf="errorHandling('columns', 'min') || errorHandling('columns', 'max')">
+                    A quantidade de colunas deve estar entre 4 e 10
                 </mat-error>
             </mat-form-field>
 

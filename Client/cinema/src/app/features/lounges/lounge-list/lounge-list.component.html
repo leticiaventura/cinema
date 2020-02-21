@@ -31,7 +31,7 @@
 
                             <ng-container matColumnDef="seats">
                                 <mat-header-cell *matHeaderCellDef>Lugares</mat-header-cell>
-                                <mat-cell *matCellDef="let lounge">{{lounge.seats}}</mat-cell>
+                                <mat-cell *matCellDef="let lounge">{{lounge.rows * lounge.columns}}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="edit">

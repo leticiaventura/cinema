@@ -1,3 +1,16 @@
-.details-text{
-    color: #303F9F;
+.details-text {
+  color: #303f9f;
+}
+
+.seat-free {
+  background-color: #57b187;
+}
+
+.seat-selected {
+  background-color: #303f9f;
+}
+
+.seat-taken {
+  background-color: #db616b;
+  pointer-events: none;
 }

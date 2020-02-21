@@ -26,7 +26,8 @@ export class LoungeUpdateFormComponent implements OnInit {
         this.activeRoute.data.subscribe(data => {
             this.formGroup.get("id").setValue(data.lounge.id);
             this.formGroup.get("name").setValue(data.lounge.name);
-            this.formGroup.get("seats").setValue(data.lounge.seats);
+            this.formGroup.get("rows").setValue(data.lounge.rows);
+            this.formGroup.get("columns").setValue(data.lounge.columns);
         });
 
     }
@@ -40,7 +41,8 @@ export class LoungeUpdateFormComponent implements OnInit {
                     updateOn: 'change'
                 }],
             id: ['', [Validators.required]],
-            seats: ['', [Validators.required, Validators.min(20), Validators.max(100)]],
+            rows: ['', [Validators.required, Validators.min(5), Validators.max(10)]],
+            columns: ['', [Validators.required, Validators.min(4), Validators.max(10)]],
         })
     }
 

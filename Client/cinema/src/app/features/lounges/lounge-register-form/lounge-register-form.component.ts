@@ -34,7 +34,8 @@ export class LoungeRegisterFormComponent implements OnInit {
                     asyncValidators: [this.validateName.bind(this)],
                     updateOn: 'change'
                 }],
-            seats: ['', [Validators.required, Validators.min(20), Validators.max(100)]],
+            rows: ['', [Validators.required, Validators.min(5), Validators.max(10)]],
+            columns: ['', [Validators.required, Validators.min(4), Validators.max(10)]],
         })
     }
 

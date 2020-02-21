@@ -28,7 +28,7 @@ namespace Cinema.Application.Features.Sessions
                 .ForMember(d => d.Lounge, o => o.MapFrom(value => value.Lounge.Name))
                 .ForMember(d => d.Audio, o => o.MapFrom(value => value.Movie.Audio.GetHashCode()))
                 .ForMember(d => d.Animation, o => o.MapFrom(value => value.Movie.Animation.GetHashCode()))
-                .ForMember(d => d.FreeSeats, o => o.MapFrom(value => value.Lounge.Seats - value.PurchasedSeats))
+                .ForMember(d => d.FreeSeats, o => o.MapFrom(value => (value.Lounge.Rows * value.Lounge.Columns) - value.TakenSeats.Count))
                 .ForMember(d => d.Start, o => o.MapFrom(value => value.Start.ToString("o")))
                 .ForMember(d => d.End, o => o.MapFrom(value => value.End.ToString("o")));
         }

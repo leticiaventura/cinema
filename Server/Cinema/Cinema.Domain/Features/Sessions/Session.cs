@@ -17,15 +17,13 @@ namespace Cinema.Domain.Features.Sessions
         public virtual Lounge Lounge { get; set; }
         public long LoungeId { get; set; }
         public double Price { get; set; }
-        public int PurchasedSeats { get; set; }
-        public Collection<Purchase> Purchases { get; set; }
+        public virtual Collection<Purchase> Purchases { get; set; }
+        public virtual Collection<Seat> TakenSeats { get; set; }
 
         public override void Validate()
         {
             if (End != Start.AddMinutes(Movie.Length))
                 throw new BusinessException(ErrorCodes.BadRequest, "O horário de fim deve ser igual ao início + duração do filme.");
-            if (PurchasedSeats > Lounge.Seats)
-                throw new BusinessException(ErrorCodes.BadRequest, "A quantidade de lugares compradas não pode ser maior que a quantidade de lugares disponíveis na sala.");
         }
     }
 }

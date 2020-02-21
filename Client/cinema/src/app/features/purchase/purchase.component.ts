@@ -1,14 +1,12 @@
-import { map, take } from 'rxjs/operators';
-import { Snack } from './../snacks/shared/snack.model';
+import { take } from 'rxjs/operators';
 import { PurchaseService } from './purchase.service';
-import { SnackService } from './../snacks/snack.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { Session } from '../sessions/shared/session.model';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import { ModalMessageComponent } from 'src/app/shared/modal-message/modal-message.component';
+import { SeatStatus } from '../sessions/shared/session.model';
 
 @Component({
     selector: 'app-purchase',
@@ -18,10 +16,11 @@ import { ModalMessageComponent } from 'src/app/shared/modal-message/modal-messag
 export class PurchaseComponent implements OnInit {
 
     formGroup: FormGroup;
-    freeSeats: number;
     session: any;
     snacks: [];
     error: string;
+    rows: number[];
+    columns: number[];
 
     dates = [];
     private audioDisplay = {
@@ -39,10 +38,10 @@ export class PurchaseComponent implements OnInit {
 
     ngOnInit(): void {
         this.activeRoute.data.subscribe((data) => {
-            this.freeSeats = data.movie.lounge.seats - data.movie.purchasedSeats;
             this.session = data.movie;
             this.reactiveForm();
             this.loadSnacks();
+            this.loadSeatSelector();
         });
 
     }
@@ -50,8 +49,8 @@ export class PurchaseComponent implements OnInit {
     reactiveForm() {
         this.formGroup = this.fb.group({
             sessionId: [this.session.id, [Validators.required]],
-            seats: [1, [Validators.required, Validators.min(1), Validators.max(this.freeSeats)]],
-            snacksArray: this.fb.array([])
+            snacksArray: this.fb.array([]),
+            seatsArray: this.fb.array([], Validators.required)
         })
     }
 
@@ -112,8 +111,67 @@ export class PurchaseComponent implements OnInit {
 
     totalPrice() {
         var total = this.formGroup.value.snacksArray.length ? this.formGroup.value.snacksArray.map(snack => snack.quantity * snack.price).reduce((acc, cur) => acc + cur) : 0;
-        total += this.session.price * this.formGroup.value.seats;
+        total += this.session.price * this.formGroup.value.seatsArray.length;
         return total;
+    }
+
+    loadSeatSelector() {
+        this.session.seats = [];
+        this.rows = Array(this.session.lounge.rows).fill(0).map((x, i) => i);
+        this.columns = Array(this.session.lounge.columns).fill(0).map((x, i) => i);
+
+        for (var row = 0; row < this.session.lounge.rows; row++) {
+            for (var column = 0; column < this.session.lounge.columns; column++) {
+                var taken = !!this.session.takenSeats.filter(x => x.row == row && x.column == column)[0];
+                this.session.seats.push({
+                    row: row,
+                    column: column,
+                    status: taken ? SeatStatus.taken : SeatStatus.free
+                });
+            }
+        }
+    }
+
+    isSeatFree(row, column) {
+        return this.getSeat(row, column).status == SeatStatus.free;
+    }
+
+    isSeatSelected(row, column) {
+        return this.getSeat(row, column).status == SeatStatus.selected;
+    }
+
+    isSeatTaken(row, column) {
+        return this.getSeat(row, column).status == SeatStatus.taken;
+    }
+
+    getSeat(row, column) {
+        return this.session.seats.filter(x => x.row == row && x.column == column)[0];
+    }
+
+    selectSeat(row, column) {
+        var seat = this.getSeat(row, column);
+        if (seat.status == SeatStatus.free) {
+            seat.status = SeatStatus.selected;
+        } else if (seat.status == SeatStatus.selected) {
+            seat.status = SeatStatus.free;
+        }
+    }
+
+    showSeatsError() {
+        return !this.session.seats.filter((seat: any) => seat.status == SeatStatus.selected)[0];
+    }
+
+    updateSeats() {
+        let control = <FormArray>this.formGroup.get('seatsArray');
+        while (control.length !== 0) {
+            control.removeAt(0)
+        }
+        this.session.seats.filter((seat: any) => seat.status == SeatStatus.selected).forEach((x: any) => {
+            control.push(this.fb.group({
+                row: x.row,
+                column: x.column
+            }))
+        });
     }
 }
 

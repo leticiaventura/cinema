@@ -1,15 +1,18 @@
 export class Lounge {
     id: number;
-    seats: number;
+    rows: number;
+    columns: number;
     name: String;
 }
 
 export class LoungeAddCommand {
-    seats: number;
+    rows: number;
+    columns: number;
     name: String;
 
     constructor(value) {
-        this.seats = value.seats;
+        this.rows = value.rows;
+        this.columns = value.columns;
         this.name = value.name;
     }
 }
@@ -26,12 +29,14 @@ export class LoungeCheckNameQuery {
 
 export class LoungeUpdateCommand {
     id: number;
-    seats: number;
+    rows: number;
+    columns: number;
     name: String;
 
     constructor(value) {
-        this.seats = value.seats;
-        this.name = value.name;    
+        this.rows = value.rows;
+        this.columns = value.columns;
+        this.name = value.name;
         this.id = value.id;
     }
 }

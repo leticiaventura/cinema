@@ -7,6 +7,7 @@ using AutoMapper;
 using Cinema.Application.Features.Base;
 using Cinema.Application.Features.Purchases.Commands;
 using Cinema.Domain.Common;
+using Cinema.Domain.Exceptions;
 using Cinema.Domain.Features.Purchases;
 using Cinema.Domain.Features.Purchases.Interfaces;
 using Cinema.Domain.Features.Sessions;
@@ -39,13 +40,25 @@ namespace Cinema.Application.Features.Purchases
             purchase.SessionDate = purchase.Session.Start.ToShortDateString();
 
             purchase.Validate();
-            session.PurchasedSeats += ((PurchaseAddCommand)command).Seats;
+            foreach (var seat in purchase.SeatsArray)
+            {
+                ValidateSelectedSeat(session, seat);
+                session.TakenSeats.Add(seat);
+            }
 
             var newEntity = _repository.Add(purchase);
             _sessionRepository.Update(session);
 
             _repository.Save();
             return newEntity;
+        }
+
+        private static void ValidateSelectedSeat(Session session, Seat seat)
+        {
+            if (session.TakenSeats.Where(x => x.Row == seat.Row && x.Column == seat.Column).FirstOrDefault() != null)
+            {
+                throw new BusinessException(ErrorCodes.BadRequest, "O assento escolhido está ocupado.");
+            }
         }
 
         private User GetUserByEmail(PurchaseAddCommand command)

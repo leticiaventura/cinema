@@ -7,6 +7,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using Cinema.Infra.ORM.Tests.Context;
 using Effort;
+using Cinema.Domain.Features.Purchases;
 
 namespace Cinema.Infra.ORM.Tests.Features.Sessions
 {
@@ -109,9 +110,8 @@ namespace Cinema.Infra.ORM.Tests.Features.Sessions
         {
             // Arrange
             var modified = false;
-            var newValue = 3;
-            _sessionBase.PurchasedSeats = newValue;
             //Action
+            _sessionBase.TakenSeats.Add(new Seat { });
             _repository.Update(_sessionBase);
             var act = new Action(() => { modified = _repository.Save(); });
             // Assert

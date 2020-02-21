@@ -9,7 +9,8 @@ namespace Cinema.Application.Features.Lounges.Commands
     public class LoungeAddCommand : AbstractAddCommand<Lounge>
     {
         public virtual string Name { get; set; }
-        public virtual int Seats { get; set; }
+        public virtual int Rows { get; set; }
+        public virtual int Columns { get; set; }
 
         public override ValidationResult Validate(IService<Lounge> service)
         {
@@ -21,7 +22,8 @@ namespace Cinema.Application.Features.Lounges.Commands
             public Validator(ILoungeService service)
             {
                 RuleFor(c => c.Name).NotNull().NotEmpty().Must((name) => !service.IsNameAlreadyInUse(name, 0)).WithMessage("O nome já está em uso");
-                RuleFor(c => c.Seats).GreaterThanOrEqualTo(20).LessThanOrEqualTo(100);
+                RuleFor(c => c.Rows).GreaterThanOrEqualTo(5).LessThanOrEqualTo(10);
+                RuleFor(c => c.Columns).GreaterThanOrEqualTo(4).LessThanOrEqualTo(10);
             }
         }
     }

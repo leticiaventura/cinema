@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
@@ -9,6 +10,7 @@ using Cinema.Application.Features.Sessions.ViewModels;
 using Cinema.Common.Tests;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Movies;
+using Cinema.Domain.Features.Purchases;
 using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Sessions.Interfaces;
 using Cinema.WebAPI.Controllers.Sessions;
@@ -50,6 +52,7 @@ namespace Cinema.WebAPI.Tests.Features.Sessions
             _session.Setup(x => x.Id).Returns(id);
             _session.Setup(x => x.Lounge).Returns(ObjectMother.GetDefaultLounge());
             _session.Setup(x => x.Movie).Returns(ObjectMother.GetDefaultMovie());
+            _session.Setup(x => x.TakenSeats).Returns(new Collection<Seat>());
             var response = new List<Session>() { _session.Object }.AsQueryable();
             _sessionServiceMock.Setup(s => s.GetAll()).Returns(response);
             var odataOptions = GetOdataQueryOptions<Session>(_sessionsController);

@@ -38,3 +38,9 @@ export class SessionGetAvailableLoungesQuery {
         this.movieLength = movieLength;
     }
 }
+
+export enum SeatStatus {
+    free = 0,
+    selected = 1,
+    taken =2
+}

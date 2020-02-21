@@ -4,6 +4,7 @@
     {
         public virtual long Id { get; set; }
         public virtual string Name { get; set; }
-        public virtual int Seats { get; set; }
+        public virtual int Rows { get; set; }
+        public virtual int Columns { get; set; }
     }
 }

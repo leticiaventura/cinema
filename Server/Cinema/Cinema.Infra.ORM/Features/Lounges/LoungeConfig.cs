@@ -10,7 +10,8 @@ namespace Cinema.Infra.ORM.Features.Lounges
             ToTable("Lounges");
             HasKey(u => u.Id);
             Property(u => u.Name).IsRequired();
-            Property(u => u.Seats).IsRequired();
+            Property(u => u.Rows).IsRequired();
+            Property(u => u.Columns).IsRequired();
         }
     }
 }

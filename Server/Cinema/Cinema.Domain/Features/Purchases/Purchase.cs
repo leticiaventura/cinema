@@ -21,6 +21,7 @@ namespace Cinema.Domain.Features.Purchases
         public string SessionDate { get; set; }
         public string MovieName { get; set; }
         public List<PurchaseSnack> SnacksArray { get; set; }
+        public List<Seat> SeatsArray { get; set; }
         public string XmlSnacks { get => SerializeSnack(); set { } }
 
         private string SerializeSnack()

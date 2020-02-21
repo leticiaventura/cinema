@@ -31,15 +31,24 @@
             <div class="d-flex justify-content-center">
                 <div class="col-lg-4">
                     <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="submitForm()" novalidate>
-                        <mat-form-field class="vertical-space">
-                            <input matInput placeholder="Quantidade de Lugares" formControlName="seats" type="number">
-                            <mat-error *ngIf="errorHandling('seats', 'required')">
-                                {{ requiredAlert }}
-                            </mat-error>
-                            <mat-error *ngIf="errorHandling('seats', 'max') || errorHandling('seats', 'min')">
-                                A quantidade de lugares disponíveis é: {{ freeSeats }}
-                            </mat-error>
-                        </mat-form-field>
+                        <table class="d-flex justify-content-center vertical-space">
+                            <tbody style="padding: 10px; border: 1px solid white;">
+                                <tr *ngFor="let row of rows">
+                                    <td><button *ngFor="let column of columns" type="button" mat-mini-fab [ngClass]="{
+                                                'seat-free': isSeatFree(row, column),
+                                                'seat-taken':isSeatTaken(row, column),
+                                                'seat-selected':isSeatSelected(row, column)
+                                            }"
+                                            
+                                            (click)="selectSeat(row, column)">
+                                            <mat-icon mat-list-icon>event_seat</mat-icon>
+                                        </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <mat-error class="d-flex justify-content-center vertical-space" *ngIf="showSeatsError()">
+                            Pelo menos 1 assento deve ser selecionado.
+                        </mat-error>
                     </form>
                 </div>
             </div>
@@ -47,7 +56,7 @@
             <div class="d-flex justify-content-center vertical-space">
                 <button mat-raised-button matStepperPrevious color="primary">Voltar</button>
                 <div style="width: 1%;"></div>
-                <button mat-raised-button matStepperNext color="primary">Avançar</button>
+                <button mat-raised-button matStepperNext (click)="updateSeats()" color="primary">Avançar</button>
             </div>
         </form>
     </mat-step>
@@ -91,9 +100,9 @@
         <p>Duração: {{ session.movie.length }} minutos</p>
         <p>Audio: {{ audioDisplay[session.movie.audio] }}</p>
         <p>Animação: {{ animationDisplay[session.movie.animation] }}</p>
-        <p>Lugares: {{ formGroup.value.seats }}</p>
+        <p>Lugares: {{ formGroup.value.seatsArray.length }}</p>
         <p>Preço: R$ {{ session.price | number:'.2-2':'pt' }} </p>
-        <p><b>Total: R$ {{ session.price * formGroup.value.seats | number:'.2-2':'pt' }}</b></p>
+        <p><b>Total: R$ {{ session.price * formGroup.value.seatsArray.length | number:'.2-2':'pt' }}</b></p>
         <br>
         <mat-divider></mat-divider><br>
         <div *ngIf="formGroup.value.snacksArray.length">
@@ -109,10 +118,15 @@
 
         <h3>Valor Total: R$ {{totalPrice() | number:'.2-2':'pt'}} </h3>
 
+        <mat-error class="d-flex justify-content-center vertical-space" *ngIf="error">
+           {{error}}
+        </mat-error>
+
         <div class="d-flex justify-content-center vertical-space">
             <button mat-raised-button matStepperPrevious color="primary">Voltar</button>
             <div style="width: 1%;"></div>
-            <button mat-raised-button [disabled]="!formGroup.valid" (click)="submitForm()" color="primary">Concluir</button>
+            <button mat-raised-button [disabled]="!formGroup.valid" (click)="submitForm()"
+                color="primary">Concluir</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>

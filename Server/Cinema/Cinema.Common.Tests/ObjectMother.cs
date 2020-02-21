@@ -96,7 +96,8 @@ namespace Cinema.Common.Tests
             {
                 Id = 1,
                 Name = "Sala VIP",
-                Seats = 30,
+                Rows = 5,
+                Columns = 5,
                 Sessions = new Collection<Session>()
             };
         }
@@ -106,7 +107,8 @@ namespace Cinema.Common.Tests
             return new LoungeAddCommand
             {
                 Name = "Sala 34",
-                Seats = 20
+                Rows = 5,
+                Columns = 5,
             };
         }
 
@@ -114,7 +116,8 @@ namespace Cinema.Common.Tests
         {
             return new LoungeUpdateCommand
             {
-                Seats = 89,
+                Rows = 5,
+                Columns = 6,
                 Name = "newName",
                 Id = 1
             };
@@ -176,10 +179,10 @@ namespace Cinema.Common.Tests
                 LoungeId = 1,
                 MovieId = 1,
                 Price = 15.89,
-                PurchasedSeats = 2,
                 Start = DateTime.Now.AddDays(7),
                 Lounge = GetDefaultLounge(),
-                Movie = GetDefaultMovie()
+                Movie = GetDefaultMovie(),
+                TakenSeats = new Collection<Seat>()
             };
         }
 

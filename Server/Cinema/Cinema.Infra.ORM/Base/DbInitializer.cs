@@ -51,17 +51,20 @@ namespace Cinema.Infra.ORM.Base
             Lounge lounge1 = new Lounge
             {
                 Name = "Sala 1",
-                Seats = 30
+                Rows = 6,
+                Columns = 5
             };
             Lounge lounge2 = new Lounge
             {
                 Name = "Sala 2",
-                Seats = 30
+                Rows = 6,
+                Columns = 5
             };
             Lounge lounge3 = new Lounge
             {
                 Name = "Sala 3",
-                Seats = 30
+                Rows = 9,
+                Columns = 9
             };
             context.Lounges.AddRange(new List<Lounge> { lounge1, lounge2, lounge3 });
             #endregion
