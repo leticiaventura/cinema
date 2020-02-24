@@ -60,6 +60,17 @@ export class MovieCheckNameQuery {
     }
 }
 
+export class MovieReport {
+    id: number;
+    name: string;
+    revenue: number;
+}
+
+export class DataGridMovieReport {
+    items: MovieReport[];
+    count: number;
+}
+
 export enum Audio {
     original = 0,
     dubbed = 1

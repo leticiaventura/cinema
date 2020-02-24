@@ -14,7 +14,6 @@ namespace Cinema.Domain.Features.Purchases
         public long UserId { get; set; }
         public User User { get; set; }
         public double Total { get; set; }
-        public int Seats { get; set; }
         public DateTime Date { get; set; }
         public long SessionId { get; set; }
         public Session Session { get; set; }
@@ -41,7 +40,7 @@ namespace Cinema.Domain.Features.Purchases
             {
                 sum += snack.Price * snack.Quantity;
             }
-            sum += Session.Price * Seats;
+            sum += Session.Price * SeatsArray.Count;
 
             return sum;
         }

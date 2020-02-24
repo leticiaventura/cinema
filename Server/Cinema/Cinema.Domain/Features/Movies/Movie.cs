@@ -14,5 +14,6 @@ namespace Cinema.Domain.Features.Movies
         public EnumAnimation Animation { get; set; }
         public EnumAudio Audio { get; set; }
         public Collection<Session> Sessions { get; set; }
+        public double Revenue { get; set; }
     }
 }

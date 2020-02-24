@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Cinema.Application.Features.Movies;
 using Cinema.Application.Tests.Initializer;
 using Cinema.Common.Tests;
+using Cinema.Domain.Exceptions;
 using Cinema.Domain.Features.Movies;
 using Cinema.Domain.Features.Movies.Interfaces;
+using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Sessions.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -20,12 +22,14 @@ namespace Cinema.Application.Tests.Features.Movies
     {
         IMovieService _movieService;
         Mock<IMovieRepository> _mockMovieRepository;
+        Mock<ISessionRepository> _mockSessionRepository;
 
         [SetUp]
         public void Initialize()
         {
             _mockMovieRepository = new Mock<IMovieRepository>();
-            _movieService = new MovieService( _mockMovieRepository.Object, _mapper);
+            _mockSessionRepository = new Mock<ISessionRepository>();
+            _movieService = new MovieService(_mockSessionRepository.Object, _mockMovieRepository.Object, _mapper);
         }
 
         #region Add
@@ -132,6 +136,22 @@ namespace Cinema.Application.Tests.Features.Movies
             //Assert
             _mockMovieRepository.Verify(e => e.Remove(idToRemove), Times.Once);
             removed.Should().BeFalse();
+        }
+
+        [Test]
+        public void Movie_Service_Remove_Should_Throw_Exception_When_Movie_Used_By_Session()
+        {
+            //Arrange
+            var idToRemove = 1;
+            var stubSession = (new List<Session> { new Session { MovieId = 1, End = DateTime.Now.AddDays(5) } }).AsQueryable();
+            _mockSessionRepository.Setup(s => s.GetAll()).Returns(stubSession);
+
+            //Action
+            Action act = () => _movieService.Remove(idToRemove);
+
+            //Assert
+            act.Should().Throw<BusinessException>();
+            _mockMovieRepository.Verify(e => e.Remove(idToRemove), Times.Never);
         }
         #endregion
 

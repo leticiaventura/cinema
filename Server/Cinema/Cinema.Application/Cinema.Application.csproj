@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\Base\AbstractService.cs" />
+    <Compile Include="Features\Movies\ViewModels\MovieReportViewModel.cs" />
     <Compile Include="Features\Purchases\Commands\PurchaseAddCommand.cs" />
     <Compile Include="Features\Purchases\MappingProfile.cs" />
     <Compile Include="Features\Purchases\PurchaseService.cs" />

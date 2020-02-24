@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
+using Cinema.Application.Features.Movies.ViewModels;
 using Cinema.Application.Features.Purchases.Commands;
 using Cinema.Application.Features.Purchases.ViewModels;
 using Cinema.Domain.Features.Purchases;
@@ -109,6 +110,33 @@ namespace Cinema.WebAPI.Controllers.Purchases
                 allTickets = allTickets.Where(x => x.User.Name.Contains(name));
             }
             return allTickets;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("report/movie")]
+        public IHttpActionResult GetMovieResport(ODataQueryOptions<Purchase> queryOptions)
+        {
+            string filter = queryOptions.Filter == null ? "" : queryOptions.Filter.RawValue;
+
+            var allPurchases = _service.GetAll();
+            var movies = allPurchases.Select(x => x.Session.Movie).Distinct().Where(m => m.Name.Contains(filter)).ToList();
+
+            foreach (var movie in movies)
+            {
+                movie.Revenue = allPurchases.Where(x => x.Session.Movie.Id == movie.Id).Select(x => x.Total).Sum();
+            }
+
+            int count = movies.Count();
+
+            movies = movies.OrderByDescending(x => x.Revenue)
+                .Skip(queryOptions.Skip.Value)
+                .Take(queryOptions.Top.Value).ToList();
+
+            var result = _mapper.Map<IList<MovieReportViewModel>>(movies);
+
+            var pageResult = new PageResult<MovieReportViewModel>(result, null, count);
+            return Ok(pageResult);
         }
     }
 }

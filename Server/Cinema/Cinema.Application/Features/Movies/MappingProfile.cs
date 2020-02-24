@@ -26,6 +26,7 @@ namespace Cinema.Application.Features.Movies
             CreateMap<Movie, MovieGridViewModel>()
                 .ForMember(d => d.Animation, o => o.MapFrom(value => value.Animation.GetHashCode()))
                 .ForMember(d => d.Audio, o => o.MapFrom(value => value.Audio.GetHashCode()));
+            CreateMap<Movie, MovieReportViewModel>();
         }
     }
 }

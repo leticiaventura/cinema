@@ -104,13 +104,16 @@ namespace Cinema.Application.Tests.Features.Sessions
             //Arrange
             var idToRemove = 1;
             var mockWasRemoved = true;
-            _mockSessionRepository.Setup(e => e.Save()).Returns(mockWasRemoved);
+            Session stubSession = ObjectMother.GetDefaultSession();
+            stubSession.Start = stubSession.Start.AddDays(15);
+            _mockSessionRepository.Setup(r => r.GetById(idToRemove)).Returns(stubSession);
+            _mockSessionRepository.Setup(r => r.Save()).Returns(mockWasRemoved);
 
             //Action
             var removed = _sessionService.Remove(idToRemove);
 
             //Assert
-            _mockSessionRepository.Verify(e => e.Remove(idToRemove), Times.Once);
+            _mockSessionRepository.Verify(r => r.Remove(idToRemove), Times.Once);
             removed.Should().BeTrue();
         }
 
@@ -128,6 +131,22 @@ namespace Cinema.Application.Tests.Features.Sessions
             //Assert
             _mockSessionRepository.Verify(e => e.Remove(idToRemove), Times.Once);
             removed.Should().BeFalse();
+        }
+
+        [Test]
+        public void Session_Service_Remove_Should_Throw_Exception_When_Start_In_Less_Than_10_Days()
+        {
+            //Arrange
+            var idToRemove = 1;
+            Session stubSession = ObjectMother.GetDefaultSession();
+            _mockSessionRepository.Setup(r => r.GetById(idToRemove)).Returns(stubSession);
+
+            //Action
+            Action act = () => _sessionService.Remove(idToRemove);
+
+            //Assert
+            act.Should().Throw<BusinessException>();
+            _mockSessionRepository.Verify(e => e.Remove(idToRemove), Times.Never);
         }
         #endregion
 

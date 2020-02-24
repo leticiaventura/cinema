@@ -46,5 +46,22 @@ namespace Cinema.Infra.ORM.Tests.Features.Purchases
         }
 
         #endregion
+
+        #region GET
+        [Test]
+        public void Purchases_Repository_Should_Get_All_Sucessfully()
+        {
+            //Action
+            var purchases = _repository.GetAll().ToList();
+
+            //Assert
+            purchases.Should().NotBeNull();
+            purchases.Should().HaveCount(1);
+            purchases.First().Should().Be(_purchaseBase);
+            purchases.First().User.Should().NotBeNull();
+            purchases.First().Session.Should().NotBeNull();
+        }
+
+        #endregion
     }
 }

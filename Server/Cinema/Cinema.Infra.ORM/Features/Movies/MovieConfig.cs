@@ -15,6 +15,7 @@ namespace Cinema.Infra.ORM.Features.Movies
             Property(u => u.Length).IsRequired();
             Property(u => u.Animation).IsRequired();
             Property(u => u.Audio).IsRequired();
+            Ignore(m => m.Revenue);
         }
     }
 }

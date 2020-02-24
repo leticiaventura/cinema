@@ -1,3 +1,4 @@
+import { DataGridMovieReport } from './../movies/shared/movie.model';
 import { PurchasedSessions } from './../history/history.model';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -58,6 +59,20 @@ export class PurchaseService {
             param = param.set('$filterDate', new Date().toISOString())
         }
         return this.http.get<PurchasedTickets>(this.api + 'api/purchases/check-in', {
+            params: param
+        });
+    }
+
+    getMovieReport(filter = '', skip = 0, top = 10): Observable<DataGridMovieReport> {
+        var param = new HttpParams()
+            .set('$skip', skip.toString())
+            .set('$top', top.toString())
+            .set('$count', 'true');
+
+        if (filter) {
+            param = param.set('$filter', filter)
+        }
+        return this.http.get<DataGridMovieReport>(this.api + 'api/purchases/report/movie', {
             params: param
         });
     }

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Cinema.Application.Features.Lounges;
 using Cinema.Application.Tests.Initializer;
 using Cinema.Common.Tests;
+using Cinema.Domain.Exceptions;
 using Cinema.Domain.Features.Lounges;
 using Cinema.Domain.Features.Lounges.Interfaces;
+using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Sessions.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -85,6 +87,22 @@ namespace Cinema.Application.Tests.Features.Lounges
         }
 
         [Test]
+        public void Lounge_Service_Update_Should_Throw_Exception_When_Lounge_Used_By_Session()
+        {
+            //Arrange
+            var loungeCmd = ObjectMother.GetLoungeUpdateCommand();
+            var stubSession = (new List<Session> { new Session { LoungeId = 1, End = DateTime.Now.AddDays(5) } }).AsQueryable();
+            _mockSessionRepository.Setup(s => s.GetAll()).Returns(stubSession);
+
+            //Action
+            Action act = () => _loungeService.Update(loungeCmd);
+
+            //Assert
+            act.Should().Throw<BusinessException>();
+            _mockLoungeRepository.Verify(e => e.Update(It.IsAny<Lounge>()), Times.Never);
+        }
+
+        [Test]
         public void Lounge_Service_Update_Should_Not_Run_When_Not_Found()
         {
             //Arrange
@@ -118,6 +136,22 @@ namespace Cinema.Application.Tests.Features.Lounges
             //Assert
             _mockLoungeRepository.Verify(e => e.Remove(idToRemove), Times.Once);
             removed.Should().BeTrue();
+        }
+
+        [Test]
+        public void Lounge_Service_Remove_Should_Throw_Exception_When_Lounge_Used_By_Session()
+        {
+            //Arrange
+            var idToRemove = 1;
+            var stubSession = (new List<Session> { new Session { LoungeId = 1, End = DateTime.Now.AddDays(5) } }).AsQueryable();
+            _mockSessionRepository.Setup(s => s.GetAll()).Returns(stubSession);
+
+            //Action
+            Action act = () => _loungeService.Remove(idToRemove);
+
+            //Assert
+            act.Should().Throw<BusinessException>();
+            _mockLoungeRepository.Verify(e => e.Remove(idToRemove), Times.Never);
         }
 
         [Test]

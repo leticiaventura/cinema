@@ -15,6 +15,7 @@ const routes: Routes = [
     { path: 'conta', loadChildren: () => import('./features/account/account.module').then(m => m.AccountsModule) },
     { path: 'compras', loadChildren: () => import('./features/purchase/purchase.module').then(m => m.PurchaseModule) },
     { path: 'bilhetes', loadChildren: () => import('./features/check-in/check-in.module').then(m => m.CheckInModule) },
+    { path: 'relatorio-filmes', loadChildren: () => import('./features/movie-report/movie-report.module').then(m => m.MovieReportModule) },
     {
         path: 'login',
         component: LoginComponent

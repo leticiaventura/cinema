@@ -15,7 +15,6 @@ namespace Cinema.Infra.ORM.Features.Purchases
             Property(u => u.Total).IsRequired();
             Property(u => u.XmlSnacks).IsRequired();
             Property(u => u.Date).IsRequired();
-            Property(u => u.Seats).IsRequired();
             Property(u => u.SessionDate).IsRequired();
             HasRequired<Session>(s => s.Session).WithMany(m => m.Purchases).HasForeignKey(s => s.SessionId);
             HasRequired<User>(s => s.User).WithMany(m => m.Purchases).HasForeignKey(s => s.UserId);

@@ -15,6 +15,7 @@ using Cinema.Domain.Features.Purchases;
 using Cinema.Domain.Features.Sessions;
 using Cinema.Domain.Features.Snacks;
 using Cinema.Domain.Features.Users;
+using Cinema.Application.Features.Purchases.Commands;
 
 namespace Cinema.Common.Tests
 {
@@ -205,7 +206,6 @@ namespace Cinema.Common.Tests
             {
                 Id = 1,
                 Date = DateTime.Now,
-                Seats = 3,
                 MovieName = GetDefaultMovie().Name,
                 Session = GetDefaultSession(),
                 SessionId = 1,
@@ -213,6 +213,17 @@ namespace Cinema.Common.Tests
                 User = GetDefaultUser(),
                 UserId = 1,
                 SessionDate = DateTime.Now.ToShortDateString()
+            };
+        }
+
+        public static PurchaseAddCommand GetPurchaseAddCommand()
+        {
+            return new PurchaseAddCommand
+            {
+                SeatsArray = new List<Seat> { new Seat { Row = 1 } },
+                SessionId = 1,
+                SnacksArray = new List<PurchaseSnack>(),
+                UserEmail = "user"
             };
         }
         #endregion

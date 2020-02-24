@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Features\Lounges\LoungeServiceTest.cs" />
     <Compile Include="Features\Movies\MovieServiceTest.cs" />
+    <Compile Include="Features\Purchases\PurchaseServiceTest.cs" />
     <Compile Include="Features\Sessions\SessionServiceTest.cs" />
     <Compile Include="Features\Snacks\SnackServiceTest.cs" />
     <Compile Include="Features\Users\UserServiceTest.cs" />
